@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RS Clan event System</title>
+    <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="p-3 mb-3 border-bottom">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none" href="/">
+                    <img class="bi me-2" src="./images/jagex/Your_Clan_icon.webp"/>
+                </a>
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li>
+                        <a class="nav-link px-2 link-secondary" href="/">Profile</a>
+                    </li>
+                    <li>
+                        <a class="nav-link px-2 link-body-emphasis" href="/">Current Event</a>
+                    </li>
+                    <li>
+                        <a class="nav-link px-2 link-body-emphasis" href="/">My Clan</a>
+                    </li>
+                    <li>
+                        <a class="nav-link px-2 link-body-emphasis" href="/">Event Management</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div class="card border-secondary mb-3" style="width: 300px;">
+        <div class="card-header">
+            <div class="row text-center align-items-center">
+                <div class="col-3 align-self-start">
+                Total:
+                <br/>
+                    <span class="badge text-bg-success rounded-circle">
+                        2277
+                    </span>
+                </div>
+                <div class="col badge text-bg-secondary">
+                    <h4>Hincarpie</h4>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <img src="./images/jagex/default_bot.webp" style="max-width: 280px;"/>
+        </div>
+        <div class="card-body">
+            <div class="row text-center align-items-center">
+                <div class="col-sm-6">
+                    <div class="row text-center align-items-center">
+                        <div class="col">
+                            <img src="./images/jagex/Giant_stopwatch_detail.webp" style="max-width: 40px;"/>
+                        </div>
+                        <div class="col text-center align-items-center">
+                            <div class="row text-center badge text-bg-primary">
+                                <h5>EST</h5>
+                            </div>
+                            <div class="row text-bg-secondary rounded">
+                                40-50 hours
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row align-items-center">
+                        <img src="./images/jagex/Combat_Achievements_-_grandmaster_tier_icon.webp" style="width: 60px; height: 40px;"/>
+                        2525
+                    </div>
+                    <div class="row align-items-center">
+                        <img src="./images/jagex/Coins_detail.webp" style="max-width:60px;"/>
+                        MAIN
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-2">
+                    <img src="./images/jagex/1280px-Dizana's_quiver_detail.webp" style="max-width:40px;"/>
+                </div>
+                <div class="col-2">
+                    <img src="./images/jagex/1280px-Infernal_cape_detail.webp" style="max-width:40px;"/>
+                </div>
+                <div class="col-2">
+                    <img src="./images/jagex/Scythe_of_vitur_detail.webp" style="max-width:40px;"/>
+                </div>
+                <div class="col-2">
+                    <img src="./images/jagex/Tumeken's_shadow_detail.webp" style="max-width:40px;"/>
+                </div>
+                <div class="col-2">
+                    <img src="./images/jagex/1280px-Twisted_bow_detail.webp" style="max-width:40px;"/>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            SOME NOTES FROM THE USER
+        </div>
+    </div>
+    <div id="app"></div>
+    <script type="module" src="frontend.tsx"></script>
+  </body>
+</html>
