@@ -296,8 +296,8 @@ const MyClan = () => {
                 <Table striped bordered hover responsive>
                   <thead>
                     <tr>
-                      <th></th>
-                      <th></th>
+                      <th style={{ width: 30, textAlign: "center" }}></th>
+                      <th style={{ width: 40, textAlign: "center" }}></th>
                       <th
                         style={{ cursor: "pointer" }}
                         onClick={() => handleSort("displayName")}

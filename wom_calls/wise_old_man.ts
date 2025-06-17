@@ -92,9 +92,9 @@ export async function handleWiseOldManApi(req: Request) {
     }
 
     // /api/wom/player/:username/
-    const playerMatch = url.pathname.match(/^\/api\/wom\/player\/([^/]+)\/$/);
+    const playerMatch = url.pathname.match(/^\/api\/wom\/player\/([^/]+)\/?$/);
     if (playerMatch && req.method === "GET") {
-      const username = playerMatch[1]!;
+      const username = decodeURIComponent(playerMatch[1]!);
       const player = await fetchPlayerDetails(username);
       return json({ success: true, player }, 200);
     }

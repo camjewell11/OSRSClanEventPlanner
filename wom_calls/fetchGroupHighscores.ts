@@ -1,5 +1,4 @@
-import type { Metric } from "@wise-old-man/utils";
-import { WOMClient } from '@wise-old-man/utils';
+import { WOMClient, Metric } from '@wise-old-man/utils';
 
 const client = new WOMClient({
   apiKey: process.env.WOM_API_KEY,
@@ -11,9 +10,32 @@ export async function fetchGroupHighscores(
   metric: string = "overall",
   limit: number = 500
 ) {
-  return await client.groups.getGroupHiscores(
-    Number(groupId),
-    metric as Metric,
-    { limit }
-  );
+  // Normalize metric string to match Metric enum keys
+  const metricKey = metric.replace(/ /g, "_").toUpperCase();
+  const metricEnum = Metric[metricKey as keyof typeof Metric];
+
+  if (!metricEnum) {
+    throw new Error(`Invalid metric: ${metric}`);
+  }
+
+  let allResults: any[] = [];
+  let offset = 0;
+  let hasMore = true;
+
+  while (hasMore) {
+    const result = await client.groups.getGroupHiscores(
+      Number(groupId),
+      metricEnum,
+      { limit, offset }
+    );
+    if (result && result.length > 0) {
+      allResults = allResults.concat(result);
+      offset += result.length;
+      hasMore = result.length === limit;
+    } else {
+      hasMore = false;
+    }
+  }
+
+  return allResults;
 }

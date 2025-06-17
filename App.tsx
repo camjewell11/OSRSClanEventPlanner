@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MenuBar from "./MenuBar/MenuBar";
 import Home from "./MenuBar/Home";
 import MyProfile from "./MenuBar/MyProfile";
+import Statistics from "./MenuBar/Statistics";
 import MyClan from "./MenuBar/MyClan";
 import WOMEvents from "./MenuBar/WOMEvents";
 import WOMEventDetails from "./MenuBar/WOMEventDetails";
@@ -17,6 +18,7 @@ const App: React.FC = () => (
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/my-profile" element={<MyProfile />} />
+        <Route path="/tracker/:username" element={<Statistics />} />
         <Route path="/my-clan" element={<MyClan />} />
         <Route path="/wom-events" element={<WOMEvents />} />
         <Route path="/wom/event/:womId" element={<WOMEventDetails />} />
