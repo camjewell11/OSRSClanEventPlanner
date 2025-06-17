@@ -13,6 +13,9 @@ if (!WISE_OLD_MAN_API_KEY || !WOM_GROUP_ID) {
   throw new Error("Missing WISE_OLD_MAN_API_KEY or WOM_GROUP_ID in .env");
 }
 
+console.log("WISE_OLD_MAN_API_KEY loaded:", !!WISE_OLD_MAN_API_KEY,  "WOM_GROUP_ID loaded:", !!WOM_GROUP_ID);
+console.log("WISE_OLD_MAN_API_KEY:", WISE_OLD_MAN_API_KEY, "WOM_GROUP_ID:", WOM_GROUP_ID);
+
 type MembershipSummary = {
   displayName: string;
   playerId: number;

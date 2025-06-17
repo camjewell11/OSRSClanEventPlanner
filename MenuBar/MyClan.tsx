@@ -69,12 +69,22 @@ const MyClan = () => {
         const data = await res.json();
         if (data.success) {
           setMembers(data.message.memberships);
-
           if (selectedSkill === "clues") {
             const cluePromises = clueScrolls.map((clue) =>
-              fetch(`/api/wom/group/highscores/?metric=${encodeURIComponent(clue)}`).then(res => res.json())
+              fetch(`/api/wom/group/highscores/?metric=${encodeURIComponent(clue)}`)
+                .then(res => {
+                  if (!res.ok) {
+                    throw new Error(`Failed to fetch highscores for ${clue}: ${res.status}`);
+                  }
+                  return res.json();
+                })
+                .catch(err => {
+                  console.error(`Error fetching highscores for ${clue}:`, err);
+                  return { success: false, message: err.message };
+                })
             );
             const clueResponses = await Promise.all(cluePromises);
+            console.log("clueResponses", clueResponses); // Add this line
             const clues: Record<string, any[]> = clueResponses.reduce((acc, response, index) => {
               const clueKey = clueScrolls[index];
               if (clueKey !== undefined) {
@@ -109,11 +119,11 @@ const MyClan = () => {
               const highscores = highscoresData.message.map((highscore: any) => ({
                 playerId: highscore.player.id,
                 displayName: highscore.player.displayName,
-                level: highscore.data.level || "N/A",
-                experience: highscore.data.experience || "N/A",
-                rank: highscore.data.rank,
+                level: highscore.data.level ?? "N/A",
+                experience: highscore.data.experience ?? "N/A",
+                rank: highscore.data.rank ?? "N/A",
                 type: highscore.player.type,
-                kills: highscore.data.kills || "N/A",
+                kills: highscore.data.kills ?? "N/A",
               }));
               setMembers((prevMembers) =>
                 prevMembers.map((member) => {
@@ -137,6 +147,7 @@ const MyClan = () => {
       }
     }
     fetchMembers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSkill]);
 
   useEffect(() => {
@@ -370,7 +381,7 @@ const MyClan = () => {
                           ) : (
                             <>
                               <td>{member.level === -1 ? "N/A" : member.level}</td>
-                              <td>{member.experience ? member.experience.toLocaleString() : "N/A"}</td>
+                              <td>{member.experience && member.experience !== "N/A" ? Number(member.experience).toLocaleString() : "N/A"}</td>
                               <td>{member.rank === -1 ? "N/A" : member.rank}</td>
                             </>
                           )}

@@ -8,7 +8,12 @@ const client = new WOMClient({
 
 export async function fetchGroupHighscores(
   groupId: string,
-  metric: string = "overall"
+  metric: string = "overall",
+  limit: number = 500
 ) {
-  return await client.groups.getGroupHiscores(Number(groupId), metric as Metric);
+  return await client.groups.getGroupHiscores(
+    Number(groupId),
+    metric as Metric,
+    { limit }
+  );
 }
