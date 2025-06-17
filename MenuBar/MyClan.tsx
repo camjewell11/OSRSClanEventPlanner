@@ -5,6 +5,38 @@ import { groupIrons, prestigeGroupIrons } from "../GroupIronmen";
 import { skills, bosses, raids, clueScrolls } from "../Information";
 import { toCamelCase } from "../helpers/CamelCase";
 
+import {
+  iron_chat,
+    ultimate_chat,
+    hardcore_chat,
+    group_chat,
+    prestige_group_chat,
+    admiral,
+    beast,
+    brigadier,
+    cadet,
+    captain,
+    colonel,
+    corporal,
+    death,
+    general,
+    imp,
+    lieutenant,
+    marshal,
+    mentor,
+    merchant,
+    moderator,
+    novice,
+    owner,
+    pawn,
+    privateRole,
+    recruit,
+    sergeant,
+    slayer,
+    smith,
+    trialist
+} from "../imageImports"
+
 // Define a type for your clan member objects
 type ClanMember = {
   playerId: number;
@@ -15,38 +47,38 @@ type ClanMember = {
 };
 
 const typeToImage: Record<string, string> = {
-  ironman: "/images/jagex/Ironman_chat_badge.webp",
-  ultimate: "/images/jagex/Ultimate_ironman_chat_badge.webp",
-  hardcore: "/images/jagex/Hardcore_ironman_chat_badge.webp",
-  group: "/images/jagex/Group_ironman_chat_badge.webp",
-  prestigeGroup: "/images/jagex/Unranked_group_ironman_chat_badge.webp",
+  ironman: iron_chat,
+  ultimate: ultimate_chat,
+  hardcore: hardcore_chat,
+  group: group_chat,
+  prestigeGroup: prestige_group_chat,
 };
 
 const roleToImage: Record<string, string> = {
-  admiral: "/images/jagex/roles/Admiral.webp",
-  beast: "/images/jagex/roles/Beast.webp",
-  brigadier: "/images/jagex/roles/Brigadier.webp",
-  cadet: "/images/jagex/roles/Cadet.webp",
-  captain: "/images/jagex/roles/Captain.webp",
-  colonel: "/images/jagex/roles/Colonel.webp",
-  corporal: "/images/jagex/roles/Corporal.webp",
-  death: "/images/jagex/roles/Death.webp",
-  general: "/images/jagex/roles/General.webp",
-  imp: "/images/jagex/roles/Imp.webp",
-  lieutenant: "/images/jagex/roles/Lieutenant.webp",
-  marshal: "/images/jagex/roles/Marshal.webp",
-  mentor: "/images/jagex/roles/Mentor.webp",
-  merchant: "/images/jagex/roles/Merchant.webp",
-  moderator: "/images/jagex/roles/Moderator.webp",
-  novice: "/images/jagex/roles/Novice.webp",
-  owner: "/images/jagex/roles/Owner.webp",
-  pawn: "/images/jagex/roles/Pawn.webp",
-  private: "/images/jagex/roles/Private.webp",
-  recruit: "/images/jagex/roles/Recruit.webp",
-  sergeant: "/images/jagex/roles/Sergeant.webp",
-  slayer: "/images/jagex/roles/Slayer.webp",
-  smith: "/images/jagex/roles/Smith.webp",
-  trialist: "/images/jagex/roles/Trialist.webp",
+  admiral: admiral,
+  beast: beast,
+  brigadier: brigadier,
+  cadet: cadet,
+  captain: captain,
+  colonel: colonel,
+  corporal: corporal,
+  death: death,
+  general: general,
+  imp: imp,
+  lieutenant: lieutenant,
+  marshal: marshal,
+  mentor: mentor,
+  merchant: merchant,
+  moderator: moderator,
+  novice: novice,
+  owner: owner,
+  pawn: pawn,
+  private: privateRole,
+  recruit: recruit,
+  sergeant: sergeant,
+  slayer: slayer,
+  smith: smith,
+  trialist: trialist,
 };
 
 const MyClan = () => {

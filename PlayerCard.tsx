@@ -5,32 +5,30 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 
-import stopwatch from './images/jagex/Giant_stopwatch_detail.webp';
-import defaultImage from './images/jagex/default_bot.webp';
-
-import ca_gm from './images/jagex/Combat_Achievements_-_grandmaster_tier_icon.webp';
-import ca_master from './images/jagex/Combat_Achievements_-_master_tier_icon.webp';
-import ca_elite from './images/jagex/Combat_Achievements_-_elite_tier_icon.webp';
-import ca_hard from './images/jagex/Combat_Achievements_-_hard_tier_icon.webp';
-import ca_med from './images/jagex/Combat_Achievements_-_medium_tier_icon.webp';
-import ca_easy from './images/jagex/Combat_Achievements_-_easy_tier_icon.webp';
-
-import achieve_quiver from './images/jagex/1280px-Dizana\'s_quiver_detail.webp';
-import achieve_cape from './images/jagex/1280px-Infernal_cape_detail.webp';
-
-import mega_bow from './images/jagex/1280px-Twisted_bow_detail.webp';
-import mega_staff from './images/jagex/Tumeken\'s_shadow_detail.webp';
-import mega_scythe from './images/jagex/Scythe_of_vitur_detail.webp';
-
-import type_unknown from './images/jagex/Cake_of_guidance_detail.webp';
-import type_main from './images/jagex/Coins_detail.webp';
-import type_iron from './images/jagex/800px-Ironman_helm_detail.webp';
-import type_hcim from './images/jagex/120px-Hardcore_ironman_helm_detail.webp';
-import type_uim from './images/jagex/800px-Ultimate_ironman_helm_detail.png';
-import type_gim from './images/jagex/800px-Group_ironman_helm_detail.webp';
-import type_hcgim from './images/jagex/Hardcore_group_ironman_helm_detail.webp';
-import type_ugim from './images/jagex/800px-Group_ironman_helm_(unranked)_detail.webp';
-import type_snowflake from "./images/snowflake.jpeg";
+import {
+  stopwatch,
+  defaultImage,
+  ca_gm,
+  ca_master,
+  ca_elite,
+  ca_hard,
+  ca_med,
+  ca_easy,
+  achieve_quiver,
+  achieve_cape,
+  mega_bow,
+  mega_staff,
+  mega_scythe,
+  type_unknown,
+  type_main,
+  type_iron,
+  type_hcim,
+  type_uim,
+  type_gim,
+  type_hcgim,
+  type_ugim,
+  type_snowflake
+} from './imageImports';
 
 interface PlayerCardProps {
     level: number;
