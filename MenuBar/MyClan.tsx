@@ -37,7 +37,6 @@ import {
     trialist
 } from "../imageImports"
 
-// Define a type for your clan member objects
 type ClanMember = {
   playerId: number;
   displayName: string;
@@ -116,7 +115,6 @@ const MyClan = () => {
                 })
             );
             const clueResponses = await Promise.all(cluePromises);
-            console.log("clueResponses", clueResponses); // Add this line
             const clues: Record<string, any[]> = clueResponses.reduce((acc, response, index) => {
               const clueKey = clueScrolls[index];
               if (clueKey !== undefined) {
