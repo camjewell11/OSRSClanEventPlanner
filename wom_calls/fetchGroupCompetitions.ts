@@ -6,5 +6,5 @@ const client = new WOMClient({
 });
 
 export async function fetchGroupCompetitions(groupId: string) {
-  return await client.groups.getGroupCompetitions(Number(groupId));
+  return await client.groups.getGroupCompetitions(Number(groupId), { limit: 50 });
 }

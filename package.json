@@ -14,7 +14,7 @@
   "dependencies": {
     "@types/react": "^19.1.8",
     "@wise-old-man/utils": "^3.3.11",
-    "bootstrap": "^5.3.6",
+    "bootstrap": "^5.3.7",
     "dotenv": "^16.5.0",
     "react": "^19.1.0",
     "react-bootstrap": "^2.10.10",

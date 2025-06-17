@@ -32,7 +32,7 @@ export async function handleWiseOldManApi(req: Request) {
   try {
     // /api/wom/group/
     if (url.pathname === "/api/wom/group/" && req.method === "GET") {
-      const group = await fetchGroupDetails(WOM_GROUP_ID);
+      const group = await fetchGroupDetails(WOM_GROUP_ID!);
       const memberships: MembershipSummary[] = (group.memberships || []).map((m: any) => ({
         displayName: m.player.displayName,
         playerId: m.player.id,
@@ -44,7 +44,7 @@ export async function handleWiseOldManApi(req: Request) {
 
     // /api/wom/group/competitions/
     if (url.pathname === "/api/wom/group/competitions/" && req.method === "GET") {
-      const competitions = await fetchGroupCompetitions(WOM_GROUP_ID);
+      const competitions = await fetchGroupCompetitions(WOM_GROUP_ID!);
       const now = new Date();
       const fourteenDaysAgo = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
       const filtered = competitions.filter((c: any) => {
@@ -84,7 +84,7 @@ export async function handleWiseOldManApi(req: Request) {
     // /api/wom/group/highscores/
     if (url.pathname === "/api/wom/group/highscores/" && req.method === "GET") {
       const metric = url.searchParams.get("metric") || "overall";
-      const highscores = await fetchGroupHighscores(WOM_GROUP_ID, metric);
+      const highscores = await fetchGroupHighscores(WOM_GROUP_ID!, metric);
       return json({ success: true, message: highscores }, 200);
     }
 

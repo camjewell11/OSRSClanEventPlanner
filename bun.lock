@@ -6,7 +6,7 @@
       "dependencies": {
         "@types/react": "^19.1.8",
         "@wise-old-man/utils": "^3.3.11",
-        "bootstrap": "^5.3.6",
+        "bootstrap": "^5.3.7",
         "dotenv": "^16.5.0",
         "react": "^19.1.0",
         "react-bootstrap": "^2.10.10",
@@ -58,7 +58,7 @@
 
     "@wise-old-man/utils": ["@wise-old-man/utils@3.3.11", "", {}, "sha512-n7gjn+qIcY3TvsCCSapV7pix7S9GwVZ0m7VK+QXreCnxsIkuwXNXU09JlMUKbrhibtwFo1o9O73sJMn2DIpfbQ=="],
 
-    "bootstrap": ["bootstrap@5.3.6", "", { "peerDependencies": { "@popperjs/core": "^2.11.8" } }, "sha512-jX0GAcRzvdwISuvArXn3m7KZscWWFAf1MKBcnzaN02qWMb3jpMoUX4/qgeiGzqyIb4ojulRzs89UCUmGcFSzTA=="],
+    "bootstrap": ["bootstrap@5.3.7", "", { "peerDependencies": { "@popperjs/core": "^2.11.8" } }, "sha512-7KgiD8UHjfcPBHEpDNg+zGz8L3LqR3GVwqZiBRFX04a1BCArZOz1r2kjly2HQ0WokqTO0v1nF+QAt8dsW4lKlw=="],
 
     "bun-types": ["bun-types@1.2.16", "", { "dependencies": { "@types/node": "*" } }, "sha512-ciXLrHV4PXax9vHvUrkvun9VPVGOVwbbbBF/Ev1cXz12lyEZMoJpIJABOfPcN9gDJRaiKF9MVbSygLg4NXu3/A=="],
 

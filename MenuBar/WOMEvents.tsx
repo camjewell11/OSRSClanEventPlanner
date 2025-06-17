@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Spinner, Alert, Container, Button } from "react-bootstrap";
+import { Table, Spinner, Alert, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 type Competition = {
@@ -31,6 +31,20 @@ const WOMEvents: React.FC = () => {
     fetchCompetitions();
   }, []);
 
+  const getRowStyle = (comp: Competition) => {
+    const now = new Date();
+    const start = new Date(comp.startsAt);
+    const end = new Date(comp.endsAt);
+
+    if (now >= start && now <= end) {
+      return { backgroundColor: "#d4edda" };
+    } else if (now > end) {
+      return { backgroundColor: "#f8d7da" };
+    } else {
+      return {};
+    }
+  };
+
   if (loading) {
     return (
       <div className="text-center my-5">
@@ -40,9 +54,26 @@ const WOMEvents: React.FC = () => {
   }
 
   return (
-    <Container className="mt-4 d-flex flex-column" style={{ minHeight: "80vh" }}>
-      <h2>Clan Events</h2>
-      <Table striped bordered hover>
+    <div
+      style={{
+        width: "100%",
+        minHeight: "80vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <h2 style={{ alignSelf: "flex-start", marginLeft: '2.5vw' }}>Clan Events</h2>
+      <Table
+        striped
+        bordered
+        hover
+        responsive
+        style={{
+          width: "95vw",
+          margin: "0 auto",
+        }}
+      >
         <thead>
           <tr>
             <th>Event Name</th>
@@ -54,10 +85,10 @@ const WOMEvents: React.FC = () => {
         <tbody>
           {competitions.map((comp) => (
             <tr key={comp.id}>
-              <td>{comp.title}</td>
-              <td>{new Date(comp.startsAt).toLocaleString()}</td>
-              <td>{new Date(comp.endsAt).toLocaleString()}</td>
-              <td>
+              <td style={getRowStyle(comp)}>{comp.title}</td>
+              <td style={getRowStyle(comp)}>{new Date(comp.startsAt).toLocaleString()}</td>
+              <td style={getRowStyle(comp)}>{new Date(comp.endsAt).toLocaleString()}</td>
+              <td style={getRowStyle(comp)}>
                 <Button
                   variant="primary"
                   size="sm"
@@ -71,7 +102,7 @@ const WOMEvents: React.FC = () => {
         </tbody>
       </Table>
       <div style={{ flex: 1 }} />
-      <div className="d-flex justify-content-center mb-3">
+      <div className="d-flex justify-content-center mb-3 mt-3" style={{ width: "95vw" }}>
         <Alert
           variant="info"
           className="w-100"
@@ -80,7 +111,7 @@ const WOMEvents: React.FC = () => {
           You must have the WiseOldMan plugin installed in Runelite to track event statistics.
         </Alert>
       </div>
-    </Container>
+    </div>
   );
 };
 
