@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Table, Spinner, Alert, Container, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 type Competition = {
   id: number;
@@ -10,6 +12,7 @@ type Competition = {
 const WOMEvents: React.FC = () => {
   const [competitions, setCompetitions] = useState<Competition[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchCompetitions() {
@@ -20,7 +23,7 @@ const WOMEvents: React.FC = () => {
           setCompetitions(data.competitions);
         }
       } catch (e) {
-        // Handle error (optional)
+        console.error("Error fetching competitions:", e);
       } finally {
         setLoading(false);
       }
@@ -29,18 +32,23 @@ const WOMEvents: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div className="text-center my-5"><div className="spinner-border" role="status" /></div>;
+    return (
+      <div className="text-center my-5">
+        <Spinner animation="border" role="status" />
+      </div>
+    );
   }
 
   return (
-    <div>
+    <Container className="mt-4 d-flex flex-column" style={{ minHeight: "80vh" }}>
       <h2>Clan Events</h2>
-      <table className="table table-striped">
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>Event Name</th>
             <th>Start Date</th>
             <th>End Date</th>
+            <th>View</th>
           </tr>
         </thead>
         <tbody>
@@ -49,14 +57,30 @@ const WOMEvents: React.FC = () => {
               <td>{comp.title}</td>
               <td>{new Date(comp.startsAt).toLocaleString()}</td>
               <td>{new Date(comp.endsAt).toLocaleString()}</td>
+              <td>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() => navigate(`/wom/event/${comp.id}`)}
+                >
+                  View Event
+                </Button>
+              </td>
             </tr>
           ))}
         </tbody>
-      </table>
-      <div className="alert alert-info mt-4">
-        You must have the WiseOldMan plugin installed in Runelite to track event statistics.
+      </Table>
+      <div style={{ flex: 1 }} />
+      <div className="d-flex justify-content-center mb-3">
+        <Alert
+          variant="info"
+          className="w-100"
+          style={{ marginBottom: 0 }}
+        >
+          You must have the WiseOldMan plugin installed in Runelite to track event statistics.
+        </Alert>
       </div>
-    </div>
+    </Container>
   );
 };
 

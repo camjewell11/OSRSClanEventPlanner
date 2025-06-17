@@ -1,4 +1,9 @@
 import React from 'react';
+import Card from 'react-bootstrap/Card';
+import Badge from 'react-bootstrap/Badge';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
 
 import stopwatch from './images/jagex/Giant_stopwatch_detail.webp';
 import defaultImage from './images/jagex/default_bot.webp';
@@ -108,69 +113,73 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
     });
 
     return (
-        <div className="card border-secondary mb-3" style={{ width: 300 + "px" }}>
-            <div className="card-header">
-                <div className="row text-center align-items-center">
-                    <div className="col-3 align-self-start">
-                        Total:
-                        <br />
-                        <span className="badge text-bg-success rounded-circle">
-                            {level}
-                        </span>
-                    </div>
-                    <div className="col badge text-bg-secondary">
-                        <h4>{username}</h4>
-                    </div>
-                </div>
-            </div>
-            <div className="card-body">
-                <img src={defaultImage} style={{ maxWidth: 280 + "px" }} />
-            </div>
-            <div className="card-body">
-                <div className="row text-center align-items-center">
-                    <div className="col-sm-6">
-                        <div className="row text-center align-items-center">
-                            <div className="col">
-                                <img src={stopwatch} style={{ maxWidth: 40 + "px" }} />
-                            </div>
-                            <div className="col text-center align-items-center">
-                                <div className="row text-center badge text-bg-primary">
-                                    <h5>{timezone}</h5>
-                                </div>
-                                <div className="row text-bg-secondary rounded">
-                                    {hours} hours
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-sm-6">
-                        <div className="row align-items-center">
-                            <img src={ca_icon} style={{ width: 60 + "px", height: 40 + "px" }} />
-                            {ca_score}
-                        </div>
-                        <div className="row align-items-center">
-                            <img src={account_type_ico} style={{ maxWidth: 60 + "px" }} />
-                            {account_type}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {activeAchievements.length > 0 && (
-                <div className="card-body">
-                    <div className="row align-items-center">
-                        {activeAchievements.map((icon, idx) => (
-                            <div className="col-2" key={icon.prop}>
-                                <img src={icon.img} style={{ maxWidth: 40 + "px" }} />
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
-            <div className="card-body">
-                {notes}
-            </div>
-        </div>
-    );
+    <Card border="secondary" className="mb-3" style={{ width: 300 }}>
+      <Card.Header>
+        <Row className="text-center align-items-center">
+          <Col xs={3} className="align-self-start">
+            Total:
+            <br />
+            <Badge bg="success" pill>
+              {level}
+            </Badge>
+          </Col>
+          <Col>
+            <h4>
+              <Badge bg="secondary">{username}</Badge>
+            </h4>
+          </Col>
+        </Row>
+      </Card.Header>
+      <Card.Body>
+        <Image src={defaultImage} style={{ maxWidth: 280 }} fluid />
+      </Card.Body>
+      <Card.Body>
+        <Row className="text-center align-items-center">
+          <Col sm={6}>
+            <Row className="text-center align-items-center">
+              <Col>
+                <Image src={stopwatch} style={{ maxWidth: 40 }} fluid />
+              </Col>
+              <Col>
+                <Row>
+                  <Badge bg="primary">
+                    <h5>{timezone}</h5>
+                  </Badge>
+                </Row>
+                <Row>
+                  <Badge bg="secondary" className="rounded">
+                    {hours} hours
+                  </Badge>
+                </Row>
+              </Col>
+            </Row>
+          </Col>
+          <Col sm={6}>
+            <Row className="align-items-center">
+              <Image src={ca_icon} style={{ width: 60, height: 40 }} fluid />
+              {ca_score}
+            </Row>
+            <Row className="align-items-center">
+              <Image src={account_type_ico} style={{ maxWidth: 60 }} fluid />
+              {account_type}
+            </Row>
+          </Col>
+        </Row>
+      </Card.Body>
+      {activeAchievements.length > 0 && (
+        <Card.Body>
+          <Row className="align-items-center">
+            {activeAchievements.map((icon) => (
+              <Col xs={2} key={icon.prop}>
+                <Image src={icon.img} style={{ maxWidth: 40 }} fluid />
+              </Col>
+            ))}
+          </Row>
+        </Card.Body>
+      )}
+      <Card.Body>{notes}</Card.Body>
+    </Card>
+  );
 };
 
 export default PlayerCard;

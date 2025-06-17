@@ -1,4 +1,4 @@
-import PlayerCard from "../player_card";
+import PlayerCard from "../PlayerCard"
 
 export default function Home() {
   return (
