@@ -1,4 +1,4 @@
-import {h, Component} from 'preact';
+import {Component} from 'react';
 
 import stopwatch from './images/jagex/Giant_stopwatch_detail.webp';
 import defaultImage from './images/jagex/default_bot.webp';
@@ -64,94 +64,96 @@ class PlayerCard extends Component {
     constructor(props: PlayerCardProps) {
         super(props);
     }
-    render(props:any, state:any) {
+    override render() {
         let account_type_ico = type_unknown;
 
-        if (accountTypes.has(props.account_type))
+        if (accountTypes.has(this.props.account_type))
         {
-            account_type_ico = accountTypes.get(props.account_type);
+            account_type_ico = accountTypes.get(this.props.account_type);
         }
 
         let ca_icon = ca_easy;
 
         for (const [minPoints, ico] of caIcons)
         {
-            if (props.ca_score >= minPoints)
+            if (this.props.ca_score >= minPoints)
             {
-                account_type_ico = ico;
+                ca_icon = ico;
                 break;
             }
         }
 
         return (
-        <div className="card border-secondary mb-3" style="width: 300px;">
+        <div className="card border-secondary mb-3" style={{width: 300+"px"}}>
             <div className="card-header">
                 <div className="row text-center align-items-center">
                     <div className="col-3 align-self-start">
                     Total:
                     <br/>
                         <span className="badge text-bg-success rounded-circle">
-                            {props.level}
+                            {this.props.level}
                         </span>
                     </div>
                     <div className="col badge text-bg-secondary">
-                        <h4>{props.username}</h4>
+                        <h4>{this.props.username}</h4>
                     </div>
                 </div>
             </div>
             <div className="card-body">
-                <img src={defaultImage} style="max-width: 280px;"/>
+                <img src={defaultImage} style={{maxWidth: 280+"px"}}/>
             </div>
             <div className="card-body">
                 <div className="row text-center align-items-center">
                     <div className="col-sm-6">
                         <div className="row text-center align-items-center">
                             <div className="col">
-                                <img src={stopwatch} style="max-width: 40px;"/>
+                                <img src={stopwatch} style={{maxWidth: 40+"px"}}/>
                             </div>
                             <div className="col text-center align-items-center">
                                 <div className="row text-center badge text-bg-primary">
-                                    <h5>{props.timezone}</h5>
+                                    <h5>{this.props.timezone}</h5>
                                 </div>
                                 <div className="row text-bg-secondary rounded">
-                                    {props.hours} hours
+                                    {this.props.hours} hours
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="col-sm-6">
                         <div className="row align-items-center">
-                            <img src={ca_icon} style="width: 60px; height: 40px;"/>
-                            {props.ca_score}
+                            <img src={ca_icon} style={{width: 60+"px", height: 40+"px"}}/>
+                            {this.props.ca_score}
                         </div>
                         <div className="row align-items-center">
-                            <img src={account_type_ico} style="max-width:60px;"/>
-                            {props.account_type}
+                            <img src={account_type_ico} style={{maxWidth:60+"px"}}/>
+                            {this.props.account_type}
                         </div>
                     </div>
                 </div>
             </div>
-            {props.has_quiver || props.has_infernal || props.has_scythe || props.has_tbow || props.has_shadow ? <div className="card-body">
-                <div className="row align-items-center">
-                    {props.has_quiver ? <div className="col-2">
-                        <img src={achieve_quiver} style="max-width:40px;"/>
-                    </div> : {}}
-                    {props.has_infernal ? <div className="col-2">
-                        <img src={achieve_cape} style="max-width:40px;"/>
-                    </div> : {}}
-                    {props.has_scythe ? <div className="col-2">
-                        <img src={mega_scythe} style="max-width:40px;"/>
-                    </div> : {}}
-                    {props.has_shadow ? <div className="col-2">
-                        <img src={mega_staff} style="max-width:40px;"/>
-                    </div> : {}}
-                    {props.has_tbow ? <div className="col-2">
-                        <img src={mega_bow} style="max-width:40px;"/>
-                    </div> : {}}
-                </div>
-            </div> : {}}
+
             <div className="card-body">
-                {props.notes}
+                <div className="row align-items-center">
+                    {this.props.has_quiver && <div className="col-2">
+                        <img src={achieve_quiver} style={{maxWidth:40+"px"}}/>
+                    </div>}
+                    {this.props.has_infernal && <div className="col-2">
+                        <img src={achieve_cape} style={{maxWidth:40+"px"}}/>
+                    </div>}
+                    {this.props.has_scythe && <div className="col-2">
+                        <img src={mega_scythe} style={{maxWidth:40+"px"}}/>
+                    </div>}
+                    {this.props.has_shadow && <div className="col-2">
+                        <img src={mega_staff} style={{maxWidth:40+"px"}}/>
+                    </div>}
+                    {this.props.has_tbow && <div className="col-2">
+                        <img src={mega_bow} style={{maxWidth:40+"px"}}/>
+                    </div>}
+                </div>
+            </div> 
+            
+            <div className="card-body">
+                {this.props.notes}
             </div>
         </div>);
     }
