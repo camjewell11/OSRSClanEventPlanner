@@ -27,70 +27,85 @@ import type_hcgim from './images/jagex/Hardcore_group_ironman_helm_detail.webp';
 import type_ugim from './images/jagex/800px-Group_ironman_helm_(unranked)_detail.webp';
 import type_snowflake from "./images/snowflake.jpeg";
 
+interface PlayerCardProps {
+    level: number;
+    account_type: string;
+    ca_score: number;
+    username: string;
+    timezone: string;
+    hours: string;
+    notes: string;
+    has_shadow: boolean;
+    has_tbow: boolean;
+    has_scythe: boolean;
+    has_quiver: boolean;
+    has_infernal: boolean;
+};
+
 class PlayerCard extends Component {
+
+    constructor(props: PlayerCardProps) {
+        super(props);
+    }
     render(props:any, state:any) {
-        let level = 2009;
-        let username = "YuukiVsCG";
-        let account_type = "IRON";
         let account_type_ico = type_unknown;
 
-        if (account_type === "MAIN")
+        if (props.account_type === "MAIN")
         {
             account_type_ico = type_main;
         }
-        else if (account_type === "IRON")
+        else if (props.account_type === "IRON")
         {
             account_type_ico = type_iron;
         }
-        else if (account_type === "HCIM")
+        else if (props.account_type === "HCIM")
         {
             account_type_ico = type_hcim;
         }
-        else if (account_type === "UIM")
+        else if (props.account_type === "UIM")
         {
             account_type_ico = type_uim;
         }
-        else if (account_type === "GIM")
+        else if (props.account_type === "GIM")
         {
             account_type_ico = type_gim;
         }
-        else if (account_type === "HCGIM")
+        else if (props.account_type === "HCGIM")
         {
             account_type_ico = type_hcgim;
         }
-        else if (account_type === "UGIM")
+        else if (props.account_type === "UGIM")
         {
             account_type_ico = type_ugim;
         }
-        else if (account_type === "SNOWFLAKE")
+        else if (props.account_type === "SNOWFLAKE")
         {
             account_type_ico = type_snowflake;
         }
 
-        let ca_score = 500;
         let ca_icon = ca_easy;
 
-        if (ca_score >= 148)
+        if (props.ca_score >= 148)
         {
             ca_icon = ca_med;
         }
 
-        if (ca_score >= 394)
+        if (props.ca_score >= 394)
         {
             ca_icon = ca_hard;
         }
 
-        if (ca_score >= 1026)
+        if (props.ca_score >= 1026)
         {
             ca_icon = ca_elite;
         }
 
-        if (ca_score >= 1841)
+        if (props.ca_score >= 1841)
         {
             ca_icon = ca_master;
         }
 
-        if (ca_score >= 2525)
+        if (props.ca_score >= 2525)
         {
             ca_icon = ca_gm;
         }
@@ -102,11 +117,11 @@ class PlayerCard extends Component {
                         Total:
                         <br/>
                             <span className="badge text-bg-success rounded-circle">
-                                {level}
+                                {props.level}
                             </span>
                         </div>
                         <div className="col badge text-bg-secondary">
-                            <h4>{username}</h4>
+                            <h4>{props.username}</h4>
                         </div>
                     </div>
                 </div>
@@ -122,10 +137,10 @@ class PlayerCard extends Component {
                                 </div>
                                 <div className="col text-center align-items-center">
                                     <div className="row text-center badge text-bg-primary">
-                                        <h5>EST</h5>
+                                        <h5>{props.timezone}</h5>
                                     </div>
                                     <div className="row text-bg-secondary rounded">
-                                        40-50 hours
+                                        {props.hours} hours
                                     </div>
                                 </div>
                             </div>
@@ -133,36 +148,36 @@ class PlayerCard extends Component {
                         <div className="col-sm-6">
                             <div className="row align-items-center">
                                 <img src={ca_icon} style="width: 60px; height: 40px;"/>
-                                {ca_score}
+                                {props.ca_score}
                             </div>
                             <div className="row align-items-center">
                                 <img src={account_type_ico} style="max-width:60px;"/>
-                                {account_type}
+                                {props.account_type}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="card-body">
+                {props.has_quiver || props.has_infernal || props.has_scythe || props.has_tbow || props.has_shadow ? <div className="card-body">
                     <div className="row align-items-center">
-                        <div className="col-2">
+                        {props.has_quiver ? <div className="col-2">
                             <img src={acheive_quiver} style="max-width:40px;"/>
-                        </div>
-                        <div className="col-2">
+                        </div> : {}}
+                        {props.has_infernal ? <div className="col-2">
                             <img src={acheive_cape} style="max-width:40px;"/>
-                        </div>
-                        <div className="col-2">
+                        </div> : {}}
+                        {props.has_scythe ? <div className="col-2">
                             <img src={mega_scythe} style="max-width:40px;"/>
-                        </div>
-                        <div className="col-2">
+                        </div> : {}}
+                        {props.has_shadow ? <div className="col-2">
                             <img src={mega_staff} style="max-width:40px;"/>
-                        </div>
-                        <div className="col-2">
+                        </div> : {}}
+                        {props.has_tbow ? <div className="col-2">
                             <img src={mega_bow} style="max-width:40px;"/>
-                        </div>
+                        </div> : {}}
                     </div>
-                </div>
+                </div> : {}}
                 <div className="card-body">
-                    SOME NOTES FROM THE USER
+                    {props.notes}
                 </div>
             </div>);
     }
