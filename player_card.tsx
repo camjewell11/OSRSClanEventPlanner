@@ -10,8 +10,8 @@ import ca_hard from './images/jagex/Combat_Achievements_-_hard_tier_icon.webp';
 import ca_med from './images/jagex/Combat_Achievements_-_medium_tier_icon.webp';
 import ca_easy from './images/jagex/Combat_Achievements_-_easy_tier_icon.webp';
 
-import acheive_quiver from './images/jagex/1280px-Dizana\'s_quiver_detail.webp';
-import acheive_cape from './images/jagex/1280px-Infernal_cape_detail.webp';
+import achieve_quiver from './images/jagex/1280px-Dizana\'s_quiver_detail.webp';
+import achieve_cape from './images/jagex/1280px-Infernal_cape_detail.webp';
 
 import mega_bow from './images/jagex/1280px-Twisted_bow_detail.webp';
 import mega_staff from './images/jagex/Tumeken\'s_shadow_detail.webp';
@@ -81,78 +81,79 @@ class PlayerCard extends Component {
                 account_type_ico = ico;
                 break;
             }
-        }    
-        
-        return (<div className="card border-secondary mb-3" style="width: 300px;">
-                <div className="card-header">
-                    <div className="row text-center align-items-center">
-                        <div className="col-3 align-self-start">
-                        Total:
-                        <br/>
-                            <span className="badge text-bg-success rounded-circle">
-                                {props.level}
-                            </span>
-                        </div>
-                        <div className="col badge text-bg-secondary">
-                            <h4>{props.username}</h4>
-                        </div>
+        }
+
+        return (
+        <div className="card border-secondary mb-3" style="width: 300px;">
+            <div className="card-header">
+                <div className="row text-center align-items-center">
+                    <div className="col-3 align-self-start">
+                    Total:
+                    <br/>
+                        <span className="badge text-bg-success rounded-circle">
+                            {props.level}
+                        </span>
+                    </div>
+                    <div className="col badge text-bg-secondary">
+                        <h4>{props.username}</h4>
                     </div>
                 </div>
-                <div className="card-body">
-                    <img src={defaultImage} style="max-width: 280px;"/>
-                </div>
-                <div className="card-body">
-                    <div className="row text-center align-items-center">
-                        <div className="col-sm-6">
-                            <div className="row text-center align-items-center">
-                                <div className="col">
-                                    <img src={stopwatch} style="max-width: 40px;"/>
+            </div>
+            <div className="card-body">
+                <img src={defaultImage} style="max-width: 280px;"/>
+            </div>
+            <div className="card-body">
+                <div className="row text-center align-items-center">
+                    <div className="col-sm-6">
+                        <div className="row text-center align-items-center">
+                            <div className="col">
+                                <img src={stopwatch} style="max-width: 40px;"/>
+                            </div>
+                            <div className="col text-center align-items-center">
+                                <div className="row text-center badge text-bg-primary">
+                                    <h5>{props.timezone}</h5>
                                 </div>
-                                <div className="col text-center align-items-center">
-                                    <div className="row text-center badge text-bg-primary">
-                                        <h5>{props.timezone}</h5>
-                                    </div>
-                                    <div className="row text-bg-secondary rounded">
-                                        {props.hours} hours
-                                    </div>
+                                <div className="row text-bg-secondary rounded">
+                                    {props.hours} hours
                                 </div>
                             </div>
                         </div>
-                        <div className="col-sm-6">
-                            <div className="row align-items-center">
-                                <img src={ca_icon} style="width: 60px; height: 40px;"/>
-                                {props.ca_score}
-                            </div>
-                            <div className="row align-items-center">
-                                <img src={account_type_ico} style="max-width:60px;"/>
-                                {props.account_type}
-                            </div>
+                    </div>
+                    <div className="col-sm-6">
+                        <div className="row align-items-center">
+                            <img src={ca_icon} style="width: 60px; height: 40px;"/>
+                            {props.ca_score}
+                        </div>
+                        <div className="row align-items-center">
+                            <img src={account_type_ico} style="max-width:60px;"/>
+                            {props.account_type}
                         </div>
                     </div>
                 </div>
-                {props.has_quiver || props.has_infernal || props.has_scythe || props.has_tbow || props.has_shadow ? <div className="card-body">
-                    <div className="row align-items-center">
-                        {props.has_quiver ? <div className="col-2">
-                            <img src={acheive_quiver} style="max-width:40px;"/>
-                        </div> : {}}
-                        {props.has_infernal ? <div className="col-2">
-                            <img src={acheive_cape} style="max-width:40px;"/>
-                        </div> : {}}
-                        {props.has_scythe ? <div className="col-2">
-                            <img src={mega_scythe} style="max-width:40px;"/>
-                        </div> : {}}
-                        {props.has_shadow ? <div className="col-2">
-                            <img src={mega_staff} style="max-width:40px;"/>
-                        </div> : {}}
-                        {props.has_tbow ? <div className="col-2">
-                            <img src={mega_bow} style="max-width:40px;"/>
-                        </div> : {}}
-                    </div>
-                </div> : {}}
-                <div className="card-body">
-                    {props.notes}
+            </div>
+            {props.has_quiver || props.has_infernal || props.has_scythe || props.has_tbow || props.has_shadow ? <div className="card-body">
+                <div className="row align-items-center">
+                    {props.has_quiver ? <div className="col-2">
+                        <img src={achieve_quiver} style="max-width:40px;"/>
+                    </div> : {}}
+                    {props.has_infernal ? <div className="col-2">
+                        <img src={achieve_cape} style="max-width:40px;"/>
+                    </div> : {}}
+                    {props.has_scythe ? <div className="col-2">
+                        <img src={mega_scythe} style="max-width:40px;"/>
+                    </div> : {}}
+                    {props.has_shadow ? <div className="col-2">
+                        <img src={mega_staff} style="max-width:40px;"/>
+                    </div> : {}}
+                    {props.has_tbow ? <div className="col-2">
+                        <img src={mega_bow} style="max-width:40px;"/>
+                    </div> : {}}
                 </div>
-            </div>);
+            </div> : {}}
+            <div className="card-body">
+                {props.notes}
+            </div>
+        </div>);
     }
 }
 

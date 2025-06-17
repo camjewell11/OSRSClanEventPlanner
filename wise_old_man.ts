@@ -3,14 +3,11 @@ import { spawn } from "child_process";
 import { config } from "dotenv";
 config();
 
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_KEY = process.env.SUPABASE_KEY;
-const SECRET_KEY = process.env.SECRET_KEY;
 const WISE_OLD_MAN_API_KEY = process.env.WISE_OLD_MAN_API_KEY;
 const WOM_GROUP_ID = process.env.WOM_GROUP_ID;
 
-if (!SUPABASE_URL || !SUPABASE_KEY || !SECRET_KEY || !WISE_OLD_MAN_API_KEY || !WOM_GROUP_ID) {
-  throw new Error("One or more required environment variables are missing.");
+if (!WISE_OLD_MAN_API_KEY || !WOM_GROUP_ID) {
+  throw new Error("Missing WISE_OLD_MAN_API_KEY or WOM_GROUP_ID in .env");
 }
 
 function runNodeScript(script: string, args: string[]): Promise<any> {
@@ -78,7 +75,7 @@ serve({
       // /api/wom/competition/:id/
       const compMatch = url.pathname.match(/^\/api\/wom\/competition\/(\d+)\/$/);
       if (compMatch && req.method === "GET") {
-        const competitionId = compMatch[1];
+        const competitionId = compMatch[1]!;
         const script = "./wom_calls/fetchCompetitionDetails.js";
         const result = await runNodeScript(script, [competitionId]);
         const details = JSON.parse(result);
@@ -110,7 +107,7 @@ serve({
       // /api/wom/player/:username/
       const playerMatch = url.pathname.match(/^\/api\/wom\/player\/([^/]+)\/$/);
       if (playerMatch && req.method === "GET") {
-        const username = playerMatch[1];
+        const username = playerMatch[1]!;
         const script = "./wom_calls/fetchPlayerDetails.js";
         const result = await runNodeScript(script, [username]);
         const player = JSON.parse(result);
