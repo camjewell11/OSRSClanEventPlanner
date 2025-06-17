@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Tabs, Tab, Spinner, Alert } from "react-bootstrap";
-import { wildernessBosses, slayerOnlyMonsters, multiCombatBosses, hardModeRaids, memberSkills, clueScrollColors } from "../Information";
+import { raids, wildernessBosses, slayerOnlyMonsters, multiCombatBosses, hardModeRaids, memberSkills, clueScrollColors } from "../Information";
 
 const Statistics: React.FC = () => {
   const { username } = useParams<{ username: string }>();
@@ -27,20 +27,13 @@ const Statistics: React.FC = () => {
             acc[key] = latestData.activities[key];
             return acc;
           }, {});
-        const raids = [
-          "chambers_of_xeric",
-          "chambers_of_xeric_challenge_mode",
-          "theatre_of_blood",
-          "theatre_of_blood_hard_mode",
-          "tombs_of_amascut",
-          "tombs_of_amascut_expert",
-        ].reduce((acc: any, raid) => {
+        const raidsObj = raids.reduce((acc: any, raid: string) => {
           if (latestData.bosses[raid]) acc[raid] = latestData.bosses[raid];
           return acc;
         }, {});
         const activities = latestData.activities;
 
-        setOsrsDetails({ skills, bosses, clues, raids, activities });
+        setOsrsDetails({ skills, bosses, clues, raids: raidsObj, activities });
       } catch (err: any) {
         setError(err.message);
       } finally {
