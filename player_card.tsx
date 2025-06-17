@@ -42,6 +42,23 @@ interface PlayerCardProps {
     has_infernal: boolean;
 };
 
+let accountTypes = new Map<string, any>();
+accountTypes.set("MAIN", type_main);
+accountTypes.set("IRON", type_iron);
+accountTypes.set("HCIM", type_hcim);
+accountTypes.set("UIM", type_uim);
+accountTypes.set("GIM", type_gim);
+accountTypes.set("HCGIM", type_hcgim);
+accountTypes.set("UGIM", type_ugim);
+accountTypes.set("SNOWFLAKE", type_snowflake);
+
+let caIcons = new Map<number, any>();
+caIcons.set(2525, ca_gm);
+caIcons.set(1841, ca_master);
+caIcons.set(1026, ca_elite);
+caIcons.set(394, ca_hard);
+caIcons.set(148, ca_med);
+
 class PlayerCard extends Component {
 
     constructor(props: PlayerCardProps) {
@@ -50,65 +67,21 @@ class PlayerCard extends Component {
     render(props:any, state:any) {
         let account_type_ico = type_unknown;
 
-        if (props.account_type === "MAIN")
+        if (accountTypes.has(props.account_type))
         {
-            account_type_ico = type_main;
-        }
-        else if (props.account_type === "IRON")
-        {
-            account_type_ico = type_iron;
-        }
-        else if (props.account_type === "HCIM")
-        {
-            account_type_ico = type_hcim;
-        }
-        else if (props.account_type === "UIM")
-        {
-            account_type_ico = type_uim;
-        }
-        else if (props.account_type === "GIM")
-        {
-            account_type_ico = type_gim;
-        }
-        else if (props.account_type === "HCGIM")
-        {
-            account_type_ico = type_hcgim;
-        }
-        else if (props.account_type === "UGIM")
-        {
-            account_type_ico = type_ugim;
-        }
-        else if (props.account_type === "SNOWFLAKE")
-        {
-            account_type_ico = type_snowflake;
+            account_type_ico = accountTypes.get(props.account_type);
         }
 
         let ca_icon = ca_easy;
 
-        if (props.ca_score >= 148)
+        for (const [minPoints, ico] of caIcons)
         {
-            ca_icon = ca_med;
-        }
-
-        if (props.ca_score >= 394)
-        {
-            ca_icon = ca_hard;
-        }
-
-        if (props.ca_score >= 1026)
-        {
-            ca_icon = ca_elite;
-        }
-
-        if (props.ca_score >= 1841)
-        {
-            ca_icon = ca_master;
-        }
-
-        if (props.ca_score >= 2525)
-        {
-            ca_icon = ca_gm;
-        }
+            if (props.ca_score >= minPoints)
+            {
+                account_type_ico = ico;
+                break;
+            }
+        }    
         
         return (<div className="card border-secondary mb-3" style="width: 300px;">
                 <div className="card-header">
