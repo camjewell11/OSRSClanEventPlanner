@@ -1,4 +1,5 @@
 import React from 'react';
+
 import stopwatch from './images/jagex/Giant_stopwatch_detail.webp';
 import defaultImage from './images/jagex/default_bot.webp';
 
