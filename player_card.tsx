@@ -1,5 +1,3 @@
-import {Component} from 'react';
-
 import stopwatch from './images/jagex/Giant_stopwatch_detail.webp';
 import defaultImage from './images/jagex/default_bot.webp';
 
@@ -26,6 +24,7 @@ import type_gim from './images/jagex/800px-Group_ironman_helm_detail.webp';
 import type_hcgim from './images/jagex/Hardcore_group_ironman_helm_detail.webp';
 import type_ugim from './images/jagex/800px-Group_ironman_helm_(unranked)_detail.webp';
 import type_snowflake from "./images/snowflake.jpeg";
+import React from 'react';
 
 interface PlayerCardProps {
     level: number;
@@ -59,29 +58,35 @@ caIcons.set(1026, ca_elite);
 caIcons.set(394, ca_hard);
 caIcons.set(148, ca_med);
 
-class PlayerCard extends Component {
 
+const achievementIcons = [
+    { prop: "has_quiver", img: achieve_quiver },
+    { prop: "has_infernal", img: achieve_cape },
+    { prop: "has_scythe", img: mega_scythe },
+    { prop: "has_shadow", img: mega_staff },
+    { prop: "has_tbow", img: mega_bow },
+];
+class PlayerCard extends React.Component<PlayerCardProps> {
     constructor(props: PlayerCardProps) {
         super(props);
     }
     override render() {
         let account_type_ico = type_unknown;
 
-        if (accountTypes.has(this.props.account_type))
-        {
+        if (accountTypes.has(this.props.account_type)) {
             account_type_ico = accountTypes.get(this.props.account_type);
         }
 
         let ca_icon = ca_easy;
 
-        for (const [minPoints, ico] of caIcons)
-        {
-            if (this.props.ca_score >= minPoints)
-            {
+        for (const [minPoints, ico] of caIcons) {
+            if (this.props.ca_score >= minPoints) {
                 ca_icon = ico;
                 break;
             }
         }
+
+        const activeAchievements = achievementIcons.filter(icon => (this.props as any)[icon.prop]);
 
         return (
         <div className="card border-secondary mb-3" style={{width: 300+"px"}}>
@@ -132,26 +137,17 @@ class PlayerCard extends Component {
                 </div>
             </div>
 
-            <div className="card-body">
-                <div className="row align-items-center">
-                    {this.props.has_quiver && <div className="col-2">
-                        <img src={achieve_quiver} style={{maxWidth:40+"px"}}/>
-                    </div>}
-                    {this.props.has_infernal && <div className="col-2">
-                        <img src={achieve_cape} style={{maxWidth:40+"px"}}/>
-                    </div>}
-                    {this.props.has_scythe && <div className="col-2">
-                        <img src={mega_scythe} style={{maxWidth:40+"px"}}/>
-                    </div>}
-                    {this.props.has_shadow && <div className="col-2">
-                        <img src={mega_staff} style={{maxWidth:40+"px"}}/>
-                    </div>}
-                    {this.props.has_tbow && <div className="col-2">
-                        <img src={mega_bow} style={{maxWidth:40+"px"}}/>
-                    </div>}
-                </div>
-            </div> 
-            
+            {activeAchievements.length > 0 && (
+                    <div className="card-body">
+                        <div className="row align-items-center">
+                            {activeAchievements.map((icon, idx) => (
+                                <div className="col-2" key={icon.prop}>
+                                    <img src={icon.img} style={{maxWidth:40+"px"}}/>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             <div className="card-body">
                 {this.props.notes}
             </div>
