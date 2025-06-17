@@ -1,5 +1,3 @@
-export const WOM_GROUP_ID = "3518"
-
 export const skills = [
     "Attack",
     "Strength",
