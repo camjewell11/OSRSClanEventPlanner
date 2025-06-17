@@ -1,7 +1,7 @@
 import {sql, serve} from "bun";
 import mainPage from './main.html';
 
-console.log("Hello via Bun!");
+console.log("Now running OSRS Event Planner!");
 
 const results = await Bun.build({
     entrypoints: ['./frontend.tsx'],

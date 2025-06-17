@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MenuBar from "./MenuBar";
-import Home from "./Home";
-import MyProfile from "./MyProfile";
-import MyClan from "./MyClan";
-import WOMEvents from "./WOMEvents";
-import CurrentEvent from "./CurrentEvent";
-import EventManagement from "./EventManagement";
-import Admin from "./Admin";
+import MenuBar from "./MenuBar/MenuBar";
+import Home from "./MenuBar/Home";
+import MyProfile from "./MenuBar/MyProfile";
+import MyClan from "./MenuBar/MyClan";
+import WOMEvents from "./MenuBar/WOMEvents";
+import CurrentEvent from "./MenuBar/CurrentEvent";
+import EventManagement from "./MenuBar/EventManagement";
+import Admin from "./MenuBar/Admin";
 
 const App: React.FC = () => (
   <Router>

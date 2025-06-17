@@ -1,6 +1,10 @@
 import { serve } from "bun";
-import { spawn } from "child_process";
 import { config } from "dotenv";
+import { fetchPlayerDetails } from "./fetchPlayerDetails.ts";
+import { fetchGroupDetails } from "./fetchGroupDetails.ts";
+import { fetchGroupCompetitions } from "./fetchGroupCompetitions.ts";
+import { fetchCompetitionDetails } from "./fetchCompetitionDetails.ts";
+import { fetchGroupHighscores } from "./fetchGroupHighscores.ts";
 config();
 
 const WISE_OLD_MAN_API_KEY = process.env.WISE_OLD_MAN_API_KEY;
@@ -10,22 +14,12 @@ if (!WISE_OLD_MAN_API_KEY || !WOM_GROUP_ID) {
   throw new Error("Missing WISE_OLD_MAN_API_KEY or WOM_GROUP_ID in .env");
 }
 
-function runNodeScript(script: string, args: string[]): Promise<any> {
-  return new Promise((resolve, reject) => {
-    const proc = spawn("node", [script, ...args], {
-      env: { ...process.env, WOM_API_KEY: WISE_OLD_MAN_API_KEY },
-      stdio: ["ignore", "pipe", "pipe"],
-    });
-    let stdout = "";
-    let stderr = "";
-    proc.stdout.on("data", (data) => (stdout += data));
-    proc.stderr.on("data", (data) => (stderr += data));
-    proc.on("close", (code) => {
-      if (code !== 0) reject(stderr.trim());
-      else resolve(stdout.trim());
-    });
-  });
-}
+type MembershipSummary = {
+  displayName: string;
+  playerId: number;
+  type: string;
+  role: string;
+};
 
 function json(data: any, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -40,23 +34,21 @@ serve({
     try {
       // /api/wom/group/
       if (url.pathname === "/api/wom/group/" && req.method === "GET") {
-        const script = "./wom_calls/fetchGroupDetails.js";
-        const result = await runNodeScript(script, [WOM_GROUP_ID]);
-        const group = JSON.parse(result);
-        group.memberships = (group.memberships || []).map((m: any) => ({
+        const group = await fetchGroupDetails(WOM_GROUP_ID);
+        // Only send a summary of memberships to the client
+        const memberships: MembershipSummary[] = (group.memberships || []).map((m: any) => ({
           displayName: m.player.displayName,
           playerId: m.player.id,
           type: m.player.type,
           role: m.role,
         }));
-        return json({ success: true, message: group }, 200);
+        // Attach the summary memberships to the response
+        return json({ success: true, message: { ...group, memberships } }, 200);
       }
 
       // /api/wom/group/competitions/
       if (url.pathname === "/api/wom/group/competitions/" && req.method === "GET") {
-        const script = "./wom_calls/fetchGroupCompetitions.js";
-        const result = await runNodeScript(script, [WOM_GROUP_ID]);
-        const competitions = JSON.parse(result);
+        const competitions = await fetchGroupCompetitions(WOM_GROUP_ID);
         const now = new Date();
         const fourteenDaysAgo = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
         const filtered = competitions.filter((c: any) => {
@@ -76,9 +68,7 @@ serve({
       const compMatch = url.pathname.match(/^\/api\/wom\/competition\/(\d+)\/$/);
       if (compMatch && req.method === "GET") {
         const competitionId = compMatch[1]!;
-        const script = "./wom_calls/fetchCompetitionDetails.js";
-        const result = await runNodeScript(script, [competitionId]);
-        const details = JSON.parse(result);
+        const details = await fetchCompetitionDetails(competitionId);
         const participants = (details.participations || []).map((p: any) => ({
           displayName: p.player.displayName,
           gained: p.progress.gained,
@@ -98,9 +88,7 @@ serve({
       // /api/wom/group/highscores/
       if (url.pathname === "/api/wom/group/highscores/" && req.method === "GET") {
         const metric = url.searchParams.get("metric") || "overall";
-        const script = "./wom_calls/fetchGroupHighscores.js";
-        const result = await runNodeScript(script, [WOM_GROUP_ID, metric]);
-        const highscores = JSON.parse(result);
+        const highscores = await fetchGroupHighscores(WOM_GROUP_ID, metric);
         return json({ success: true, message: highscores }, 200);
       }
 
@@ -108,9 +96,7 @@ serve({
       const playerMatch = url.pathname.match(/^\/api\/wom\/player\/([^/]+)\/$/);
       if (playerMatch && req.method === "GET") {
         const username = playerMatch[1]!;
-        const script = "./wom_calls/fetchPlayerDetails.js";
-        const result = await runNodeScript(script, [username]);
-        const player = JSON.parse(result);
+        const player = await fetchPlayerDetails(username);
         return json({ success: true, player }, 200);
       }
 
@@ -120,5 +106,5 @@ serve({
       return json({ success: false, message: `Error: ${e}` }, 500);
     }
   },
-  port: 3001,
+  port: 3001
 });
