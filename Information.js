@@ -1,0 +1,116 @@
+export const WOM_GROUP_ID = "3518"
+
+export const skills = [
+    "Attack",
+    "Strength",
+    "Defense",
+    "Ranged",
+    "Prayer",
+    "Magic",
+    "Runecrafting",
+    "Construction",
+    "Hitpoints",
+    "Agility",
+    "Herblore",
+    "Thieving",
+    "Crafting",
+    "Fletching",
+    "Slayer",
+    "Hunter",
+    "Mining",
+    "Smithing",
+    "Fishing",
+    "Cooking",
+    "Firemaking",
+    "Woodcutting",
+    "Farming",
+];
+
+export const bosses = [
+    "abyssal_sire",
+    "alchemical_hydra",
+    "amoxliatl",
+    "araxxor",
+    "artio",
+    "barrows_chests",
+    "bryophyta",
+    "callisto",
+    "calvarion",
+    "cerberus",
+    "chaos_elemental",
+    "chaos_fanatic",
+    "commander_zilyana",
+    "corporeal_beast",
+    "crazy_archaeologist",
+    "dagannoth_prime",
+    "dagannoth_rex",
+    "dagannoth_supreme",
+    "deranged_archaeologist",
+    "duke_sucellus",
+    "general_graardor",
+    "giant_mole",
+    "grotesque_guardians",
+    "hespori",
+    "kalphite_queen",
+    "king_black_dragon",
+    "kraken",
+    "kreearra",
+    "kril_tsutsaroth",
+    "nex",
+    "nightmare",
+    "phosanis_nightmare",
+    "obor",
+    "phantom_muspah",
+    "royal_titans",
+    "sarachnis",
+    "scorpia",
+    "scurrius",
+    "skotizo",
+    "sol_heredit",
+    "spindel",
+    "tempoross",
+    "the_hueycoatl",
+    "the_leviathan",
+    "the_whisperer",
+    "thermonuclear_smoke_devil",
+    "tzkal_zuk",
+    "tztok_jad",
+    "vardorvis",
+    "venenatis",
+    "vetion",
+    "vorkath",
+    "wintertodt",
+    "yama",
+    "zalcano",
+    "zulrah"
+];
+
+export const raids = ["chambers_of_xeric", "chambers_of_xeric_challenge_mode", "theatre_of_blood", "theatre_of_blood_hard_mode", "tombs_of_amascut", "tombs_of_amascut_expert"]
+
+export const memberSkills = ["agility", "construction", "farming", "fletching", "herblore", "hunter", "slayer", "thieving"];
+export const wildernessBosses = ["artio", "callisto", "calvarion", "chaos_elemental", "chaos_fanatic", "crazy_archaeologist", "scorpia", "spindel", "venenatis", "vetion"];
+export const slayerOnlyMonsters = ["abyssal_sire", "alchemical_hydra", "araxxor", "cerberus", "kraken", "thermonuclear_smoke_devil", "grotesque_guardians"];
+export const multiCombatBosses = ["corporeal_beast", "nex", "the_hueycoatl", "general_graardor", "commander_zilyana", "kreearra", "kril_tsutsaroth", "king_black_dragon", "scurrius", "royal_titans", "nightmare", "tempoross", "zalcano", "wintertodt"];
+export const hardModeRaids = ["chambers_of_xeric_challenge_mode", "theatre_of_blood_hard_mode", "tombs_of_amascut_expert"];
+
+export const clueScrolls = [
+    "clue_scrolls_all",
+    "clue_scrolls_beginner",
+    "clue_scrolls_easy",
+    "clue_scrolls_medium",
+    "clue_scrolls_hard",
+    "clue_scrolls_elite",
+    "clue_scrolls_master",
+    "mimic",
+]
+
+export const clueScrollColors = {
+    clue_scrolls_all: "black",
+    clue_scrolls_beginner: "#5b3e00",
+    clue_scrolls_easy: "#00FF00",
+    clue_scrolls_medium: "#00f3ff",
+    clue_scrolls_hard: "#cc01d9",
+    clue_scrolls_elite: "#ffe229",
+    clue_scrolls_master: "#FF0000",
+    mimic: "black",
+  };
