@@ -6,8 +6,8 @@
     "module": "Preserve",
     "moduleDetection": "force",
     "jsx": "react-jsx",
-    "jsxImportSource": "preact",
-    "types": ["preact"],
+    "jsxImportSource": "react",
+    "types": ["react"],
     "allowJs": true,
 
     // Bundler mode
