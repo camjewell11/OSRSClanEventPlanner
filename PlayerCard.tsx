@@ -154,17 +154,17 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
             {timezone}
           </Badge>
           <Badge bg="gray.600" color="white" fontSize="md" borderRadius="md" w="full" textAlign={"center"} alignItems={"center"} justifyContent={"center"} display={"flex"} minH="40px">
-            {hours} hours
+            {hours} hrs
           </Badge>
         </VStack>
-        <VStack maxW="80px">
-           <HStack>
+        <VStack maxW="90px">
+          <HStack alignContent={"center"} justifyContent={"center"} display={"flex"} textAlign={"center"}>
             <Image src={ca_icon} w="40px" h="40px" />
-            <Text fontWeight="bold" fontSize="md">{ca_score}</Text>
-            </HStack>
-          <HStack>
+            <Badge bg={"transparent"} textAlign={"center"} alignItems={"center"} justifyContent={"center"} display={"flex"} fontWeight="bold" fontSize="md">{ca_score}</Badge>
+          </HStack>
+          <HStack alignContent={"center"} justifyContent={"center"} display={"flex"} textAlign={"center"}>
             <Image src={account_type_ico} maxW="40px" />
-            <Text fontSize="md">{account_type}</Text>
+            <Badge bg={"transparent"} fontWeight="bold" fontSize="md">{account_type}</Badge>
           </HStack>
         </VStack>
       </HStack>
