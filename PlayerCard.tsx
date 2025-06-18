@@ -5,10 +5,8 @@ import {
   Badge,
   Image,
   Text,
-  Stack,
   HStack,
   VStack,
-  Spacer,
 } from "@chakra-ui/react";
 import {
   stopwatch,
