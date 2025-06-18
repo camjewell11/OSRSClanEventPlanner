@@ -118,9 +118,9 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
   return (
     <Box borderWidth="1px" borderRadius="lg" overflow="hidden" bg="white" w="300px" boxShadow="md">
       <Flex align="center" bg="gray.100" borderTopRadius="lg">
-        <VStack spaceY={-5} ml={4}>
-          <Text color="gray.600">Total:</Text>
-          <Badge bg="green" color="white" borderRadius="full" px={3} py={1}>{level}</Badge>
+        <VStack spacing={-5} ml={4}>
+          <Text color="gray.600" lineHeight="1.1">Total:</Text>
+          <Badge bg="green" color="white" borderRadius="full" px={3} minH="25px" alignItems="center" justifyContent="center" display="flex" mt="-10px">{level}</Badge>
         </VStack>
         <Flex flex="1" mx={4} mt={4} align="center">
           <Text
@@ -149,11 +149,11 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
         <VStack align="start" flex={1}>
           <HStack>
             <Image src={stopwatch} maxW="40px" />
-            <VStack align="start" w="100px">
-              <Badge bg="blue.500" color="white" fontSize="md" w="full" alignItems={"center"} justifyContent={"center"} minH="40px">
+            <VStack align="start" w="110px">
+              <Badge bg="blue.500" color="white" fontSize="lg" borderRadius="md" w="full" textAlign={"center"} alignItems="center" justifyContent="center" display="flex" minH="40px">
                 {timezone}
               </Badge>
-              <Badge bg="gray.600" color="white" fontSize="sm" borderRadius="md" w="full"  alignItems={"center"} justifyContent={"center"}>
+              <Badge bg="gray.600" color="white" fontSize="sm" borderRadius="md" w="full" textAlign={"center"}>
                 {hours} hours
               </Badge>
             </VStack>

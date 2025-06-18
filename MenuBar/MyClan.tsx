@@ -1,6 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Table, Button, Form, Tabs, Tab, Spinner, Alert, Image, Row, Col, InputGroup } from "react-bootstrap";
+import {
+  Box,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Text,
+  Button,
+  Image,
+  Input,
+  InputGroup,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Spinner,
+} from "@chakra-ui/react";
 import { skills, bosses, raids, clueScrolls } from "../Information";
 import { toCamelCase } from "../helpers/CamelCase";
 
@@ -253,124 +272,161 @@ const MyClan = () => {
   };
 
   return (
-    <div style={{ padding: 16 }}>
-      <Row className="align-items-center mb-3">
-        <Col xs={12} md={6}>
-          <h2>Clan Members</h2>
-        </Col>
-        <Col xs={12} md={6} className="d-flex justify-content-end">
-          <InputGroup style={{ maxWidth: 300, marginRight: 16 }}>
-            <Form.Control
+    <Box p={{ base: "0 4px", md: 4 }}>
+      <Box display="flex" justifyContent="space-between" alignItems="center" p={3}>
+        <Text as="h2" fontSize="xl">
+          Clan Members
+        </Text>
+        <Box display="flex" alignItems="center">
+          <InputGroup width="300px" mr={4}>
+            <Input
               placeholder="Search by username"
               value={searchTerm}
               onChange={handleSearchChange}
+              pr="40px"
             />
             {searchTerm && (
-              <Button variant="outline-secondary" size="sm" onClick={() => setSearchTerm("")}>
+              <Button
+                size="sm"
+                onClick={() => setSearchTerm("")}
+                position="absolute"
+                right="10px"
+                top="50%"
+                transform="translateY(-50%)"
+                bg="transparent"
+                _hover={{ bg: "gray.200" }}
+              >
                 ✕
               </Button>
             )}
           </InputGroup>
-          <Form.Select
-            value={selectedSkill}
-            onChange={handleSkillChange}
-            style={{ maxWidth: 200 }}
-          >
-            <option value="overall">Overall</option>
-            <option disabled>──────────</option>
-            {skills.map((skill) => (
-              <option key={skill} value={skill}>
-                {skill.charAt(0).toUpperCase() + skill.slice(1)}
-              </option>
-            ))}
-            <option disabled>──────────</option>
-            {bosses.map((boss) => (
-              <option key={boss} value={boss}>
-                {toCamelCase(boss)}
-              </option>
-            ))}
-            <option disabled>──────────</option>
-            {raids.map((raid) => (
-              <option key={raid} value={raid}>
-                {toCamelCase(raid)}
-              </option>
-            ))}
-            <option disabled>──────────</option>
-            <option value="clues">Clue Scrolls</option>
-          </Form.Select>
-        </Col>
-      </Row>
+          <InputGroup width="200px">
+            <select
+              value={selectedSkill}
+              onChange={handleSkillChange}
+              style={{
+                width: "100%",
+                padding: "8px",
+                border: "1px solid #E2E8F0",
+                borderRadius: "4px",
+                fontSize: "16px",
+              }}
+            >
+              <option value="overall">Overall</option>
+              <option disabled>──────────</option>
+              {skills.map((skill) => (
+                <option key={skill} value={skill}>
+                  {skill.charAt(0).toUpperCase() + skill.slice(1)}
+                </option>
+              ))}
+              <option disabled>──────────</option>
+              {bosses.map((boss) => (
+                <option key={boss} value={boss}>
+                  {toCamelCase(boss)}
+                </option>
+              ))}
+              <option disabled>──────────</option>
+              {raids.map((raid) => (
+                <option key={raid} value={raid}>
+                  {toCamelCase(raid)}
+                </option>
+              ))}
+              <option disabled>──────────</option>
+              <option value="clues">Clue Scrolls</option>
+            </select>
+          </InputGroup>
+        </Box>
+      </Box>
       {error && (
-        <Alert variant="danger" className="mb-3">
-          {error}
-        </Alert>
+        <Box textAlign="center" mt={2} color="red.500">
+          <Text>{error}</Text>
+        </Box>
       )}
       {isLoading ? (
-        <div className="text-center my-5">
-          <Spinner animation="border" variant="primary" />
-          <div>Loading...</div>
-        </div>
+        <Box textAlign="center" mt={4}>
+          <Spinner size="xl" color="blue.500" />
+          <Text mt={2} fontSize="lg">
+            Loading...
+          </Text>
+        </Box>
       ) : (
-        <Tabs
-          activeKey={tabKey}
-          onSelect={(k) => setTabKey(k || "all")}
-          className="mb-3"
-        >
-          <Tab eventKey="all" title="All" />
-          <Tab eventKey="regular" title="Mains" />
-          <Tab eventKey="ironman" title="Irons" />
-          <Tab eventKey="ultimate" title="Ultimates" />
-          <Tab eventKey="group" title="Groups" />
-          <Tab eventKey="hardcore" title="Hardcores" />
-          {["all", "regular", "ironman", "ultimate", "group", "hardcore"].map((type) => (
-            tabKey === type && (
-              <Tab.Pane key={type} eventKey={type}>
-                <Table striped bordered hover responsive>
-                  <thead>
-                    <tr>
-                      <th style={{ width: 30, textAlign: "center" }}></th>
-                      <th style={{ width: 40, textAlign: "center" }}></th>
-                      <th
-                        style={{ cursor: "pointer" }}
-                        onClick={() => handleSort("displayName")}
-                      >
+        <Tabs variant="enclosed" index={["all", "regular", "ironman", "ultimate", "group", "hardcore"].indexOf(tabKey)} onChange={i => setTabKey(["all", "regular", "ironman", "ultimate", "group", "hardcore"][i])}>
+          <TabList>
+            <Tab>All</Tab>
+            <Tab>Mains</Tab>
+            <Tab>Irons</Tab>
+            <Tab>Ultimates</Tab>
+            <Tab>Groups</Tab>
+            <Tab>Hardcores</Tab>
+          </TabList>
+          <TabPanels>
+            {["all", "regular", "ironman", "ultimate", "group", "hardcore"].map((type) => (
+              <TabPanel key={type}>
+                <Table variant="simple">
+                  <Thead>
+                    <Tr>
+                      <Th textAlign="center" px="12px" width="30px"></Th>
+                      <Th textAlign="center" px="12px" width="40px"></Th>
+                      <Th textAlign="left" px="12px" onClick={() => handleSort("displayName")} cursor="pointer">
                         Gamer {sortConfig.key === "displayName" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}
-                      </th>
+                      </Th>
                       {selectedSkill === "clues" ? (
                         <>
-                          <th onClick={() => handleSort("clue_scrolls_all")} style={{ cursor: "pointer" }}>Total {sortConfig.key === "clue_scrolls_all" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}</th>
-                          <th onClick={() => handleSort("clue_scrolls_beginner")} style={{ cursor: "pointer" }}>Beginner {sortConfig.key === "clue_scrolls_beginner" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}</th>
-                          <th onClick={() => handleSort("clue_scrolls_easy")} style={{ cursor: "pointer" }}>Easy {sortConfig.key === "clue_scrolls_easy" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}</th>
-                          <th onClick={() => handleSort("clue_scrolls_medium")} style={{ cursor: "pointer" }}>Medium {sortConfig.key === "clue_scrolls_medium" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}</th>
-                          <th onClick={() => handleSort("clue_scrolls_hard")} style={{ cursor: "pointer" }}>Hard {sortConfig.key === "clue_scrolls_hard" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}</th>
-                          <th onClick={() => handleSort("clue_scrolls_elite")} style={{ cursor: "pointer" }}>Elite {sortConfig.key === "clue_scrolls_elite" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}</th>
-                          <th onClick={() => handleSort("clue_scrolls_master")} style={{ cursor: "pointer" }}>Master {sortConfig.key === "clue_scrolls_master" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}</th>
-                          <th onClick={() => handleSort("mimic")} style={{ cursor: "pointer" }}>Mimic {sortConfig.key === "mimic" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}</th>
-                          <th onClick={() => handleSort("rank")} style={{ cursor: "pointer" }}>Rank {sortConfig.key === "rank" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}</th>
+                          <Th textAlign="center" px="12px" onClick={() => handleSort("clue_scrolls_all")} cursor="pointer">
+                            Total {sortConfig.key === "clue_scrolls_all" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}
+                          </Th>
+                          <Th textAlign="center" px="12px" onClick={() => handleSort("clue_scrolls_beginner")} cursor="pointer">
+                            Beginner {sortConfig.key === "clue_scrolls_beginner" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}
+                          </Th>
+                          <Th textAlign="center" px="12px" onClick={() => handleSort("clue_scrolls_easy")} cursor="pointer">
+                            Easy {sortConfig.key === "clue_scrolls_easy" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}
+                          </Th>
+                          <Th textAlign="center" px="12px" onClick={() => handleSort("clue_scrolls_medium")} cursor="pointer">
+                            Medium {sortConfig.key === "clue_scrolls_medium" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}
+                          </Th>
+                          <Th textAlign="center" px="12px" onClick={() => handleSort("clue_scrolls_hard")} cursor="pointer">
+                            Hard {sortConfig.key === "clue_scrolls_hard" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}
+                          </Th>
+                          <Th textAlign="center" px="12px" onClick={() => handleSort("clue_scrolls_elite")} cursor="pointer">
+                            Elite {sortConfig.key === "clue_scrolls_elite" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}
+                          </Th>
+                          <Th textAlign="center" px="12px" onClick={() => handleSort("clue_scrolls_master")} cursor="pointer">
+                            Master {sortConfig.key === "clue_scrolls_master" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}
+                          </Th>
+                          <Th textAlign="center" px="12px" onClick={() => handleSort("mimic")} cursor="pointer">
+                            Mimic {sortConfig.key === "mimic" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}
+                          </Th>
+                          <Th textAlign="center" px="12px" onClick={() => handleSort("rank")} cursor="pointer">
+                            Rank {sortConfig.key === "rank" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}
+                          </Th>
                         </>
                       ) : bosses.includes(selectedSkill) || raids.includes(selectedSkill) ? (
                         <>
-                          <th onClick={() => handleSort("kills")} style={{ cursor: "pointer" }}>Kills {sortConfig.key === "kills" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}</th>
-                          <th onClick={() => handleSort("rank")} style={{ cursor: "pointer" }}>Rank {sortConfig.key === "rank" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}</th>
+                          <Th textAlign="center" px="12px" onClick={() => handleSort("kills")} cursor="pointer">
+                            Kills {sortConfig.key === "kills" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}
+                          </Th>
+                          <Th textAlign="center" px="12px" onClick={() => handleSort("rank")} cursor="pointer">
+                            Rank {sortConfig.key === "rank" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}
+                          </Th>
                         </>
                       ) : (
                         <>
-                          <th onClick={() => handleSort("level")} style={{ cursor: "pointer" }}>
+                          <Th textAlign="center" px="12px" onClick={() => handleSort("level")} cursor="pointer">
                             {selectedSkill.charAt(0).toUpperCase() + selectedSkill.slice(1)} Level
                             {sortConfig.key === "level" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}
-                          </th>
-                          <th onClick={() => handleSort("experience")} style={{ cursor: "pointer" }}>
+                          </Th>
+                          <Th textAlign="center" px="12px" onClick={() => handleSort("experience")} cursor="pointer">
                             XP {sortConfig.key === "experience" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}
-                          </th>
-                          <th onClick={() => handleSort("rank")} style={{ cursor: "pointer" }}>
+                          </Th>
+                          <Th textAlign="center" px="12px" onClick={() => handleSort("rank")} cursor="pointer">
                             Rank {sortConfig.key === "rank" && (sortConfig.direction === "asc" ? "↑" : sortConfig.direction === "desc" ? "↓" : "")}
-                          </th>
+                          </Th>
                         </>
                       )}
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+                      <Th textAlign="right" px="12px">Actions</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
                     {getFilteredByType(type).map((member) => {
                       const displayType =
                         member.type === "regular" && prestigeGroupIrons.includes(member.displayName)
@@ -379,69 +435,74 @@ const MyClan = () => {
                           ? "group"
                           : member.type;
                       return (
-                        <tr key={member.playerId}>
-                          <td>
+                        <Tr key={member.playerId} sx={{ "& > td": { padding: "6px 12px" } }}>
+                          <Td textAlign="center" px="12px" width="30px">
                             {member.role && roleToImage[member.role] ? (
-                              <Image src={roleToImage[member.role]} alt={member.role} width={24} height={24} />
+                              <Image src={roleToImage[member.role]} alt={member.role} boxSize="24px" />
                             ) : (
                               member.role
                             )}
-                          </td>
-                          <td>
+                          </Td>
+                          <Td textAlign="center" px="12px" width="40px">
                             {displayType && typeToImage[displayType] && (
-                              <Image src={typeToImage[displayType]} alt={displayType} width={24} height={24} />
+                              <Image src={typeToImage[displayType]} alt={displayType} boxSize="24px" />
                             )}
-                          </td>
-                          <td>{member.displayName}</td>
+                          </Td>
+                          <Td textAlign="left" px="12px">{member.displayName}</Td>
                           {selectedSkill === "clues" ? (
                             <>
-                              <td>{member.clue_scrolls_all ?? "N/A"}</td>
-                              <td>{member.clue_scrolls_beginner ?? "N/A"}</td>
-                              <td>{member.clue_scrolls_easy ?? "N/A"}</td>
-                              <td>{member.clue_scrolls_medium ?? "N/A"}</td>
-                              <td>{member.clue_scrolls_hard ?? "N/A"}</td>
-                              <td>{member.clue_scrolls_elite ?? "N/A"}</td>
-                              <td>{member.clue_scrolls_master ?? "N/A"}</td>
-                              <td>{member.mimic ?? "N/A"}</td>
-                              <td>{member.rank === -1 ? "N/A" : member.rank}</td>
+                              <Td textAlign="center" px="12px">{member.clue_scrolls_all ?? "N/A"}</Td>
+                              <Td textAlign="center" px="12px">{member.clue_scrolls_beginner ?? "N/A"}</Td>
+                              <Td textAlign="center" px="12px">{member.clue_scrolls_easy ?? "N/A"}</Td>
+                              <Td textAlign="center" px="12px">{member.clue_scrolls_medium ?? "N/A"}</Td>
+                              <Td textAlign="center" px="12px">{member.clue_scrolls_hard ?? "N/A"}</Td>
+                              <Td textAlign="center" px="12px">{member.clue_scrolls_elite ?? "N/A"}</Td>
+                              <Td textAlign="center" px="12px">{member.clue_scrolls_master ?? "N/A"}</Td>
+                              <Td textAlign="center" px="12px">{member.mimic ?? "N/A"}</Td>
+                              <Td textAlign="center" px="12px">{member.rank === -1 ? "N/A" : member.rank}</Td>
                             </>
                           ) : bosses.includes(selectedSkill) || raids.includes(selectedSkill) ? (
                             <>
-                              <td>{member.kills === -1 ? "N/A" : member.kills}</td>
-                              <td>{member.rank === -1 ? "N/A" : member.rank}</td>
+                              <Td textAlign="center" px="12px">{member.kills === -1 ? "N/A" : member.kills}</Td>
+                              <Td textAlign="center" px="12px">{member.rank === -1 ? "N/A" : member.rank}</Td>
                             </>
                           ) : (
                             <>
-                              <td>{member.level === -1 ? "N/A" : member.level}</td>
-                              <td>{member.experience && member.experience !== "N/A" ? Number(member.experience).toLocaleString() : "N/A"}</td>
-                              <td>{member.rank === -1 ? "N/A" : member.rank}</td>
+                              <Td textAlign="center" px="12px">{member.level === -1 ? "N/A" : member.level}</Td>
+                              <Td textAlign="center" px="12px">{member.experience && member.experience !== "N/A" ? Number(member.experience).toLocaleString() : "N/A"}</Td>
+                              <Td textAlign="center" px="12px">{member.rank === -1 ? "N/A" : member.rank}</Td>
                             </>
                           )}
-                          <td>
+                          <Td textAlign="right" px="12px">
                             <Button
-                              variant="primary"
-                              size="sm"
                               onClick={() => handleViewStats(member.displayName)}
+                              colorScheme="blue"
+                              size="sm"
                             >
-                              View Stats
+                              <Text display={{ base: "none", md: "inline" }} mt={4}>
+                                View Stats
+                              </Text>
+                              <Text display={{ base: "inline", md: "none" }} mt={4}>
+                                Stats
+                              </Text>
                             </Button>
-                          </td>
-                        </tr>
+                          </Td>
+                        </Tr>
                       );
                     })}
-                  </tbody>
+                  </Tbody>
                 </Table>
                 {type === "group" && (
-                  <div className="mt-3 text-muted" style={{ fontSize: "0.9em" }}>
+                  <Text mt={4} fontSize="sm" color="gray.600">
                     If you're not listed as a group ironman in the Groups tab, message ThePrestiege on Discord to have it updated. Wise Old Man does not support group ironman type in its API.
-                  </div>
+                  </Text>
                 )}
-              </Tab.Pane>
-            )
-          ))}
+              </TabPanel>
+            ))}
+          </TabPanels>
         </Tabs>
       )}
-    </div>
+    </Box>
   );
 };
 
