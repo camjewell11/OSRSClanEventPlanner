@@ -145,7 +145,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
         <Image src={defaultImage} maxW="280px" borderRadius="md" />
       </Flex>
 
-      <HStack>
+      <HStack mr="10px">
         <VStack width="60px">
           <Image src={stopwatch} maxW="40px" />
         </VStack>
