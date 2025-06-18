@@ -111,19 +111,19 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
     });
 
     return (
-    <Card border="secondary" className="mb-3" style={{ width: 300 }}>
+    <Card border="secondary" className="mb-3" style={{ width: 300+"px" }}>
       <Card.Header>
         <Row className="text-center align-items-center">
-          <Col xs={3} className="align-self-start">
+          <Col md="3" className="align-self-start">
             Total:
             <br />
             <Badge bg="success" pill>
               {level}
             </Badge>
           </Col>
-          <Col>
+          <Col className='badge text-bg-secondary'>
             <h4>
-              <Badge bg="secondary">{username}</Badge>
+              {username}
             </h4>
           </Col>
         </Row>
@@ -135,10 +135,10 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
         <Row className="text-center align-items-center">
           <Col sm={6}>
             <Row className="text-center align-items-center">
-              <Col>
-                <Image src={stopwatch} style={{ maxWidth: 40 }} fluid />
+              <Col md={5}>
+                <Image src={stopwatch} style={{ maxWidth: 40 }} />
               </Col>
-              <Col>
+              <Col md={7}>
                 <Row>
                   <Badge bg="primary">
                     <h5>{timezone}</h5>
