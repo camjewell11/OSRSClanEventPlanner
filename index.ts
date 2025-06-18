@@ -22,20 +22,6 @@ const server = serve({
             return new Response(Bun.file("./node_modules/bootstrap/dist/css/bootstrap.min.css"));
         }
 
-        if (url.pathname.startsWith("/images/")) {
-            return new Response(Bun.file(`.${url.pathname}`));
-        }
-        if (url.pathname.startsWith("/build/")) {
-            return new Response(Bun.file(`.${url.pathname}`));
-        }
-        if (url.pathname.match(/\.(webp|png|jpg|jpeg|gif)$/)) {
-            try {
-                return new Response(Bun.file(`./build${url.pathname}`));
-            } catch {
-                return new Response(Bun.file(`.${url.pathname}`));
-            }
-        }
-
         // API handler
         if (url.pathname.startsWith("/api/wom/")) {
             return handleWiseOldManApi(req);
