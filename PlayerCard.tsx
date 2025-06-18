@@ -145,15 +145,15 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
         <Image src={defaultImage} maxW="280px" borderRadius="md" />
       </Flex>
 
-      <HStack alignItems={"center"} justify="space-between">
+      <HStack>
         <VStack width="60px">
           <Image src={stopwatch} maxW="40px" />
         </VStack>
         <VStack width="120px">
-          <Badge bg="blue.500" color="white" fontSize="md" borderRadius="md" w="full" alignItems={"center"} justifyContent={"center"} minH="40px">
+          <Badge bg="blue.500" color="white" fontSize="md" borderRadius="md" w="full" textAlign={"center"} alignItems={"center"} justifyContent={"center"} display={"flex"} minH="40px">
             {timezone}
           </Badge>
-          <Badge bg="gray.600" color="white" fontSize="md" borderRadius="md" w="full"  alignItems={"center"} justifyContent={"center"} minH="40px">
+          <Badge bg="gray.600" color="white" fontSize="md" borderRadius="md" w="full" textAlign={"center"} alignItems={"center"} justifyContent={"center"} display={"flex"} minH="40px">
             {hours} hours
           </Badge>
         </VStack>
