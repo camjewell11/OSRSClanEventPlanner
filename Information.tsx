@@ -102,7 +102,7 @@ export const clueScrolls = [
     "mimic",
 ]
 
-export const clueScrollColors = {
+export const clueScrollColors: { [key: string]: string } = {
     clue_scrolls_all: "black",
     clue_scrolls_beginner: "#5b3e00",
     clue_scrolls_easy: "#00FF00",
