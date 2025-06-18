@@ -25,34 +25,34 @@ import { toCamelCase } from "../helpers/CamelCase";
 
 import {
   iron_chat,
-    ultimate_chat,
-    hardcore_chat,
-    group_chat,
-    prestige_group_chat,
-    admiral,
-    beast,
-    brigadier,
-    cadet,
-    captain,
-    colonel,
-    corporal,
-    death,
-    general,
-    imp,
-    lieutenant,
-    marshal,
-    mentor,
-    merchant,
-    moderator,
-    novice,
-    owner,
-    pawn,
-    privateRole,
-    recruit,
-    sergeant,
-    slayer,
-    smith,
-    trialist
+  ultimate_chat,
+  hardcore_chat,
+  group_chat,
+  prestige_group_chat,
+  admiral,
+  beast,
+  brigadier,
+  cadet,
+  captain,
+  colonel,
+  corporal,
+  death,
+  general,
+  imp,
+  lieutenant,
+  marshal,
+  mentor,
+  merchant,
+  moderator,
+  novice,
+  owner,
+  pawn,
+  privateRole,
+  recruit,
+  sergeant,
+  slayer,
+  smith,
+  trialist
 } from "../imageImports"
 
 type ClanMember = {
@@ -350,7 +350,7 @@ const MyClan = () => {
           </Text>
         </Box>
       ) : (
-        <Tabs variant="enclosed" index={["all", "regular", "ironman", "ultimate", "group", "hardcore"].indexOf(tabKey)} onChange={i => setTabKey(["all", "regular", "ironman", "ultimate", "group", "hardcore"][i])}>
+        <Tabs variant="enclosed" index={["all", "regular", "ironman", "ultimate", "group", "hardcore"].indexOf(tabKey)} onChange={i => setTabKey(["all", "regular", "ironman", "ultimate", "group", "hardcore"][i] ?? "")}>
           <TabList>
             <Tab>All</Tab>
             <Tab>Mains</Tab>
@@ -475,7 +475,7 @@ const MyClan = () => {
                           )}
                           <Td textAlign="right" px="12px">
                             <Button
-                              onClick={() => handleViewStats(member.displayName)}
+                              onClick={() => handleViewStats(member.displayName ?? "")}
                               colorScheme="blue"
                               size="sm"
                             >

@@ -1,5 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Table, Spinner, Alert, Button } from "react-bootstrap";
+import {
+  Box,
+  Text,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Spinner,
+  Button,
+  Alert,
+  AlertIcon,
+  useColorModeValue,
+  Flex,
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 type Competition = {
@@ -12,6 +27,7 @@ type Competition = {
 const WOMEvents: React.FC = () => {
   const [competitions, setCompetitions] = useState<Competition[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,8 +37,11 @@ const WOMEvents: React.FC = () => {
         const data = await res.json();
         if (data.success) {
           setCompetitions(data.competitions);
+        } else {
+          setError("Failed to load competitions.");
         }
       } catch (e) {
+        setError("Error fetching competitions.");
         console.error("Error fetching competitions:", e);
       } finally {
         setLoading(false);
@@ -31,87 +50,84 @@ const WOMEvents: React.FC = () => {
     fetchCompetitions();
   }, []);
 
-  const getRowStyle = (comp: Competition) => {
-    const now = new Date();
-    const start = new Date(comp.startsAt);
-    const end = new Date(comp.endsAt);
+const getRowBg = (comp: Competition) => {
+  const now = new Date();
+  const start = new Date(comp.startsAt);
+  const end = new Date(comp.endsAt);
 
-    if (now >= start && now <= end) {
-      return { backgroundColor: "#d4edda" };
-    } else if (now > end) {
-      return { backgroundColor: "#f8d7da" };
-    } else {
-      return {};
-    }
-  };
+  if (now >= start && now <= end) {
+    return "green.200";
+  } else if (now > end) {
+    return "red.200";
+  } else {
+    return undefined;
+  }
+};
 
   if (loading) {
     return (
-      <div className="text-center my-5">
-        <Spinner animation="border" role="status" />
-      </div>
+      <Flex direction="column" align="center" justify="center" minH="60vh" w="100%">
+        <Spinner size="xl" my={10} />
+      </Flex>
     );
   }
 
   return (
-    <div
-      style={{
-        width: "100%",
-        minHeight: "80vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
+    <Box
+      w="100%"
+      minH="80vh"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      px={{ base: 2, md: 0 }}
     >
-      <h2 style={{ alignSelf: "flex-start", marginLeft: '2.5vw' }}>Clan Events</h2>
-      <Table
-        striped
-        bordered
-        hover
-        responsive
-        style={{
-          width: "95vw",
-          margin: "0 auto",
-        }}
-      >
-        <thead>
-          <tr>
-            <th>Event Name</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>View</th>
-          </tr>
-        </thead>
-        <tbody>
-          {competitions.map((comp) => (
-            <tr key={comp.id}>
-              <td style={getRowStyle(comp)}>{comp.title}</td>
-              <td style={getRowStyle(comp)}>{new Date(comp.startsAt).toLocaleString()}</td>
-              <td style={getRowStyle(comp)}>{new Date(comp.endsAt).toLocaleString()}</td>
-              <td style={getRowStyle(comp)}>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={() => navigate(`/wom/event/${comp.id}`)}
-                >
-                  View Event
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-      <div style={{ flex: 1 }} />
-      <div className="d-flex justify-content-center mb-3 mt-3" style={{ width: "95vw" }}>
-        <Alert
-          variant="info"
-          className="w-100"
-          style={{ marginBottom: 0 }}
-        >
+      <Text as="h2" fontSize="2xl" fontWeight="bold" alignSelf="flex-start" ml={{ base: 0, md: "2.5vw" }} mb={4}>
+        Clan Events
+      </Text>
+      {error && (
+        <Alert status="error" mb={4} w="95vw" maxW="container.lg">
+          <AlertIcon />
+          {error}
+        </Alert>
+      )}
+      <Box w="95vw" maxW="container.lg" overflowX="auto">
+        <Table size="md">
+          <Thead>
+            <Tr>
+              <Th>Event Name</Th>
+              <Th>Start Date</Th>
+              <Th>End Date</Th>
+              <Th>View</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {competitions.map((comp) => (
+              <Tr key={comp.id} bg={getRowBg(comp)}>
+                <Td>{comp.title}</Td>
+                <Td>{new Date(comp.startsAt).toLocaleString()}</Td>
+                <Td>{new Date(comp.endsAt).toLocaleString()}</Td>
+                <Td>
+                  <Button
+                    colorScheme="teal"
+                    size="sm"
+                    onClick={() => navigate(`/wom/event/${comp.id}`)}
+                  >
+                    View Event
+                  </Button>
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </Box>
+      <Flex flex="1" />
+      <Box w="95vw" maxW="container.lg" my={6}>
+        <Alert status="info" borderRadius="md">
+          <AlertIcon />
           You must have the WiseOldMan plugin installed in Runelite to track event statistics.
         </Alert>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

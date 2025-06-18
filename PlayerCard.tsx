@@ -145,30 +145,26 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
         <Image src={defaultImage} maxW="280px" borderRadius="md" />
       </Flex>
 
-      <Flex p={3} direction="row" justify="space-between" align="center">
-        <VStack align="start" flex={1}>
-          <HStack>
-            <Image src={stopwatch} maxW="40px" />
-            <VStack align="start" w="110px">
-              <Badge bg="blue.500" color="white" fontSize="lg" borderRadius="md" w="full" textAlign={"center"} alignItems="center" justifyContent="center" display="flex" minH="40px">
-                {timezone}
-              </Badge>
-              <Badge bg="gray.600" color="white" fontSize="sm" borderRadius="md" w="full" textAlign={"center"}>
-                {hours} hours
-              </Badge>
-            </VStack>
-          </HStack>
-        </VStack>
-        <VStack align="center" flex={1}>
-          <HStack>
+      <Flex p={3} direction="row" align="center">
+        <HStack spacing={4} w="100%">
+          <Image src={stopwatch} maxW="40px" />
+          <VStack align="start" w="150px">
+            <Badge bg="blue.500" color="white" fontSize="lg" borderRadius="md" w="full" textAlign={"center"} alignItems="center" justifyContent="center" display="flex" minH="50px">
+              {timezone}
+            </Badge>
+            <Badge bg="gray.600" color="white" fontSize="sm" borderRadius="md" w="full" textAlign={"center"} alignItems="center" justifyContent="center" display="flex" minH="30px">
+              {hours} hours
+            </Badge>
+          </VStack>
+          <VStack textAlign={"center"} alignItems="center" justifyContent="center" display="flex" w="60px">
             <Image src={ca_icon} w="40px" h="40px" />
-            <Text fontWeight="bold" fontSize="md">{ca_score}</Text>
-          </HStack>
-          <HStack>
             <Image src={account_type_ico} maxW="40px" />
+          </VStack>
+          <VStack textAlign={"center"} alignItems="center" justifyContent="center" display="flex" w="60px">
+            <Text fontWeight="bold" fontSize="md">{ca_score}</Text>
             <Text fontSize="md">{account_type}</Text>
-          </HStack>
-        </VStack>
+          </VStack>
+        </HStack>
       </Flex>
 
       {activeAchievements.length > 0 && (
