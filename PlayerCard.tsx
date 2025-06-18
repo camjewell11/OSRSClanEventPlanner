@@ -145,22 +145,20 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
         <Image src={defaultImage} maxW="280px" borderRadius="md" />
       </Flex>
 
-      <Flex p={3} direction="row" justify="space-between" align="center">
-        <VStack align="start" flex={1}>
-          <HStack>
-            <Image src={stopwatch} maxW="40px" />
-            <VStack align="start" w="100px">
-              <Badge bg="blue.500" color="white" fontSize="md" w="full" alignItems={"center"} justifyContent={"center"} minH="40px">
-                {timezone}
-              </Badge>
-              <Badge bg="gray.600" color="white" fontSize="sm" borderRadius="md" w="full"  alignItems={"center"} justifyContent={"center"}>
-                {hours} hours
-              </Badge>
-            </VStack>
-          </HStack>
+      <HStack alignItems={"center"}>
+        <VStack width="60px">
+          <Image src={stopwatch} maxW="40px" />
         </VStack>
-        <VStack align="center" flex={1}>
-          <HStack>
+        <VStack width="120px">
+          <Badge bg="blue.500" color="white" fontSize="md" w="full" alignItems={"center"} justifyContent={"center"} minH="40px">
+            {timezone}
+          </Badge>
+          <Badge bg="gray.600" color="white" fontSize="md" borderRadius="md" w="full"  alignItems={"center"} justifyContent={"center"} minH="40px">
+            {hours} hours
+          </Badge>
+        </VStack>
+        <VStack maxW="80px">
+           <HStack>
             <Image src={ca_icon} w="40px" h="40px" />
             <Text fontWeight="bold" fontSize="md">{ca_score}</Text>
           </HStack>
@@ -169,7 +167,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
             <Text fontSize="md">{account_type}</Text>
           </HStack>
         </VStack>
-      </Flex>
+      </HStack>
 
       {activeAchievements.length > 0 && (
         <Flex p={3} justify="left" align="center">
