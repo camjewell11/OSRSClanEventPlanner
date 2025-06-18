@@ -12,13 +12,20 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@chakra-ui/cli": "^3.21.0",
+    "@chakra-ui/react": "^3.21.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@types/react": "^19.1.8",
     "@wise-old-man/utils": "^3.3.11",
     "bootstrap": "^5.3.7",
     "dotenv": "^16.5.0",
+    "framer-motion": "^12.18.1",
+    "next-themes": "^0.4.6",
     "react": "^19.1.0",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.0",
+    "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.2"
   },
   "scripts": {
