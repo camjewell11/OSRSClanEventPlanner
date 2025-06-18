@@ -118,9 +118,9 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
   return (
     <Box borderWidth="1px" borderRadius="lg" overflow="hidden" bg="white" w="300px" boxShadow="md">
       <Flex align="center" bg="gray.100" borderTopRadius="lg">
-        <VStack spaceY={-5} ml={4}>
-          <Text color="gray.600">Total:</Text>
-          <Badge bg="green" color="white" borderRadius="full" px={3} py={1}>{level}</Badge>
+        <VStack spacing={-5} ml={4}>
+          <Text color="gray.600" lineHeight="1.1">Total:</Text>
+          <Badge bg="green" color="white" borderRadius="full" px={3} minH="25px" alignItems="center" justifyContent="center" display="flex" mt="-10px">{level}</Badge>
         </VStack>
         <Flex flex="1" mx={4} mt={4} align="center">
           <Text
@@ -145,12 +145,12 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
         <Image src={defaultImage} maxW="280px" borderRadius="md" />
       </Flex>
 
-      <HStack alignItems={"center"}>
+      <HStack alignItems={"center"} justify="space-between">
         <VStack width="60px">
           <Image src={stopwatch} maxW="40px" />
         </VStack>
         <VStack width="120px">
-          <Badge bg="blue.500" color="white" fontSize="md" w="full" alignItems={"center"} justifyContent={"center"} minH="40px">
+          <Badge bg="blue.500" color="white" fontSize="md" borderRadius="md" w="full" alignItems={"center"} justifyContent={"center"} minH="40px">
             {timezone}
           </Badge>
           <Badge bg="gray.600" color="white" fontSize="md" borderRadius="md" w="full"  alignItems={"center"} justifyContent={"center"} minH="40px">
