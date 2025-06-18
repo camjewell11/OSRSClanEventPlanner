@@ -79,6 +79,9 @@ const roleToImage: Record<string, string> = {
   trialist: trialist,
 };
 
+const groupIrons: string[] = []
+const prestigeGroupIrons: string[] = [];
+
 const MyClan = () => {
   const [members, setMembers] = useState<ClanMember[]>([]);
   const [filteredMembers, setFilteredMembers] = useState<ClanMember[]>([]);
