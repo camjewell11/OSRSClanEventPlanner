@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Table, Button, Form, Tabs, Tab, Spinner, Alert, Image, Row, Col, InputGroup } from "react-bootstrap";
-import { groupIrons, prestigeGroupIrons } from "../GroupIronmen";
 import { skills, bosses, raids, clueScrolls } from "../Information";
 import { toCamelCase } from "../helpers/CamelCase";
 
