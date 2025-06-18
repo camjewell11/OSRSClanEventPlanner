@@ -14,7 +14,6 @@ if (!WISE_OLD_MAN_API_KEY || !WOM_GROUP_ID) {
 }
 
 console.log("WISE_OLD_MAN_API_KEY loaded:", !!WISE_OLD_MAN_API_KEY,  "WOM_GROUP_ID loaded:", !!WOM_GROUP_ID);
-console.log("WISE_OLD_MAN_API_KEY:", WISE_OLD_MAN_API_KEY, "WOM_GROUP_ID:", WOM_GROUP_ID);
 
 type MembershipSummary = {
   displayName: string;

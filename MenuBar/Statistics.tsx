@@ -1,7 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Tabs, Tab, Spinner, Alert } from "react-bootstrap";
-import { raids, wildernessBosses, slayerOnlyMonsters, multiCombatBosses, hardModeRaids, memberSkills, clueScrollColors } from "../Information";
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  TabPanel,
+  Tab,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Box,
+  Spinner,
+  Alert,
+  AlertIcon,
+  Flex,
+  Text,
+} from "@chakra-ui/react";
+import {
+  raids,
+  wildernessBosses,
+  slayerOnlyMonsters,
+  multiCombatBosses,
+  hardModeRaids,
+  memberSkills,
+  clueScrollColors,
+} from "../Information";
 
 const Statistics: React.FC = () => {
   const { username } = useParams<{ username: string }>();
@@ -43,176 +69,253 @@ const Statistics: React.FC = () => {
     if (username) fetchOsrsDetails();
   }, [username]);
 
-  if (loading) return <div className="p-4"><Spinner animation="border" /> Loading...</div>;
-  if (error) return <Alert variant="danger" className="p-4">Error: {error}</Alert>;
+  if (loading)
+    return (
+      <Flex p={4} align="center">
+        <Spinner mr={2} /> Loading...
+      </Flex>
+    );
+  if (error)
+    return (
+      <Alert status="error" p={4}>
+        <AlertIcon />
+        Error: {error}
+      </Alert>
+    );
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2 className="mb-4">Statistics for {username}</h2>
+    <Box p={{ base: 2, md: 6 }}>
+      <Text as="h2" fontSize="2xl" mb={4}>
+        Statistics for {username}
+      </Text>
       {osrsDetails && (
-        <Tabs defaultActiveKey="skills" id="clue-tracker-tabs" className="mb-3">
-          <Tab eventKey="skills" title="Skills">
-            <table className="table table-striped table-bordered mb-4">
-              <thead>
-                <tr>
-                  <th>Skill</th>
-                  <th>Level</th>
-                  <th>XP</th>
-                  <th>Rank</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.keys(osrsDetails.skills)
-                  .filter((skill) => skill !== "overall")
-                  .map((skill) => (
-                    <tr key={skill}>
-                      <td style={{ color: memberSkills.includes(skill) ? "blue" : "black" }}>
-                        {skill.charAt(0).toUpperCase() + skill.slice(1)}
-                      </td>
-                      <td>{osrsDetails.skills[skill].level}</td>
-                      <td>{osrsDetails.skills[skill].experience.toLocaleString()}</td>
-                      <td>{osrsDetails.skills[skill].rank}</td>
-                    </tr>
+        <Tabs variant="enclosed" colorScheme="blue" isFitted>
+          <TabList>
+            <Tab>Skills</Tab>
+            <Tab>Clues</Tab>
+            <Tab>Bosses</Tab>
+            <Tab>Raids</Tab>
+            <Tab>Minigames</Tab>
+          </TabList>
+          <TabPanels>
+            {/* Skills */}
+            <TabPanel>
+              <Table variant="striped" size="sm" mb={4}>
+                <Thead>
+                  <Tr>
+                    <Th>Skill</Th>
+                    <Th>Level</Th>
+                    <Th>XP</Th>
+                    <Th>Rank</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {Object.keys(osrsDetails.skills)
+                    .filter((skill) => skill !== "overall")
+                    .map((skill) => (
+                      <Tr key={skill}>
+                        <Td color={memberSkills.includes(skill) ? "blue.500" : undefined}>
+                          {skill.charAt(0).toUpperCase() + skill.slice(1)}
+                        </Td>
+                        <Td>{osrsDetails.skills[skill].level}</Td>
+                        <Td>{osrsDetails.skills[skill].experience.toLocaleString()}</Td>
+                        <Td>{osrsDetails.skills[skill].rank}</Td>
+                      </Tr>
+                    ))}
+                  <Tr fontWeight="bold">
+                    <Td>Total</Td>
+                    <Td>{osrsDetails.skills.overall.level}</Td>
+                    <Td>{osrsDetails.skills.overall.experience.toLocaleString()}</Td>
+                    <Td />
+                  </Tr>
+                </Tbody>
+              </Table>
+            </TabPanel>
+            {/* Clues */}
+            <TabPanel>
+              <Table variant="striped" size="sm" mb={4}>
+                <Thead>
+                  <Tr>
+                    <Th>Clue</Th>
+                    <Th>Total</Th>
+                    <Th>Rank</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {Object.keys(osrsDetails.clues)
+                    .filter((clue: string) => clue !== "clue_scrolls_all")
+                    .map((clue: string) => (
+                      <Tr key={clue}>
+                        <Td color={clueScrollColors[clue] || undefined}>
+                          {clue
+                            .replace(/_/g, " ")
+                            .replace(/\b\w/g, (l) => l.toUpperCase())}
+                        </Td>
+                        <Td>
+                          {osrsDetails.clues[clue].score === -1
+                            ? "N/A"
+                            : osrsDetails.clues[clue].score}
+                        </Td>
+                        <Td>
+                          {osrsDetails.clues[clue].rank === -1
+                            ? "N/A"
+                            : osrsDetails.clues[clue].rank}
+                        </Td>
+                      </Tr>
+                    ))}
+                  <Tr fontWeight="bold">
+                    <Td>Total</Td>
+                    <Td>
+                      {osrsDetails.clues.clue_scrolls_all.score === -1
+                        ? "N/A"
+                        : osrsDetails.clues.clue_scrolls_all.score}
+                    </Td>
+                    <Td>
+                      {osrsDetails.clues.clue_scrolls_all.rank === -1
+                        ? "N/A"
+                        : osrsDetails.clues.clue_scrolls_all.rank}
+                    </Td>
+                  </Tr>
+                </Tbody>
+              </Table>
+            </TabPanel>
+            {/* Bosses */}
+            <TabPanel>
+              <Table variant="striped" size="sm" mb={4}>
+                <Thead>
+                  <Tr>
+                    <Th>Boss</Th>
+                    <Th>Kills</Th>
+                    <Th>Rank</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {Object.keys(osrsDetails.bosses).map((boss: string) => (
+                    <Tr key={boss}>
+                      <Td
+                        color={
+                          wildernessBosses.includes(boss)
+                            ? "red.500"
+                            : multiCombatBosses.includes(boss)
+                            ? "green.500"
+                            : slayerOnlyMonsters.includes(boss)
+                            ? "blue.500"
+                            : undefined
+                        }
+                      >
+                        {boss
+                          .replace(/_/g, " ")
+                          .replace(/\b\w/g, (l) => l.toUpperCase())}
+                      </Td>
+                      <Td>
+                        {osrsDetails.bosses[boss].kills === -1
+                          ? "N/A"
+                          : osrsDetails.bosses[boss].kills}
+                      </Td>
+                      <Td>
+                        {osrsDetails.bosses[boss].rank === -1
+                          ? "N/A"
+                          : osrsDetails.bosses[boss].rank}
+                      </Td>
+                    </Tr>
                   ))}
-                <tr>
-                  <td style={{ fontWeight: "bold" }}>Total</td>
-                  <td style={{ fontWeight: "bold" }}>{osrsDetails.skills.overall.level}</td>
-                  <td style={{ fontWeight: "bold" }}>{osrsDetails.skills.overall.experience.toLocaleString()}</td>
-                  <td style={{ fontWeight: "bold" }} />
-                </tr>
-              </tbody>
-            </table>
-          </Tab>
-          <Tab eventKey="clues" title="Clues">
-            <table className="table table-striped table-bordered mb-4">
-              <thead>
-                <tr>
-                  <th>Clue</th>
-                  <th>Total</th>
-                  <th>Rank</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.keys(osrsDetails.clues)
-                  .filter((clue: string) => clue !== "clue_scrolls_all")
-                  .map((clue: string) => (
-                    <tr key={clue}>
-                      <td style={{ color: clueScrollColors[clue] || "black" }}>
-                        {clue.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())}
-                      </td>
-                      <td>{osrsDetails.clues[clue].score === -1 ? "N/A" : osrsDetails.clues[clue].score}</td>
-                      <td>{osrsDetails.clues[clue].rank === -1 ? "N/A" : osrsDetails.clues[clue].rank}</td>
-                    </tr>
+                  <Tr fontWeight="bold">
+                    <Td>Total</Td>
+                    <Td>
+                      {Object.values(osrsDetails.bosses).reduce(
+                        (total: number, boss: any) =>
+                          boss.kills !== -1 ? total + boss.kills : total,
+                        0
+                      )}
+                    </Td>
+                    <Td />
+                  </Tr>
+                </Tbody>
+              </Table>
+            </TabPanel>
+            {/* Raids */}
+            <TabPanel>
+              <Table variant="striped" size="sm" mb={4}>
+                <Thead>
+                  <Tr>
+                    <Th>Raid</Th>
+                    <Th>Completions</Th>
+                    <Th>Rank</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {Object.keys(osrsDetails.raids).map((raid: string) => (
+                    <Tr key={raid}>
+                      <Td color={hardModeRaids.includes(raid) ? "red.500" : undefined}>
+                        {raid
+                          .replace(/_/g, " ")
+                          .replace(/\b\w/g, (l) => l.toUpperCase())}
+                      </Td>
+                      <Td>
+                        {osrsDetails.raids[raid].kills === -1
+                          ? "N/A"
+                          : osrsDetails.raids[raid].kills}
+                      </Td>
+                      <Td>
+                        {osrsDetails.raids[raid].rank === -1
+                          ? "N/A"
+                          : osrsDetails.raids[raid].rank}
+                      </Td>
+                    </Tr>
                   ))}
-                <tr>
-                  <td style={{ fontWeight: "bold" }}>Total</td>
-                  <td style={{ fontWeight: "bold" }}>
-                    {osrsDetails.clues.clue_scrolls_all.score === -1 ? "N/A" : osrsDetails.clues.clue_scrolls_all.score}
-                  </td>
-                  <td style={{ fontWeight: "bold" }}>
-                    {osrsDetails.clues.clue_scrolls_all.rank === -1 ? "N/A" : osrsDetails.clues.clue_scrolls_all.rank}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </Tab>
-          <Tab eventKey="bosses" title="Bosses">
-            <table className="table table-striped table-bordered mb-4">
-              <thead>
-                <tr>
-                  <th>Boss</th>
-                  <th>Kills</th>
-                  <th>Rank</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.keys(osrsDetails.bosses).map((boss: string) => (
-                  <tr key={boss}>
-                    <td style={{
-                      color: wildernessBosses.includes(boss)
-                        ? "red"
-                        : multiCombatBosses.includes(boss)
-                        ? "green"
-                        : slayerOnlyMonsters.includes(boss)
-                        ? "blue"
-                        : "black"
-                    }}>
-                      {boss.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())}
-                    </td>
-                    <td>{osrsDetails.bosses[boss].kills === -1 ? "N/A" : osrsDetails.bosses[boss].kills}</td>
-                    <td>{osrsDetails.bosses[boss].rank === -1 ? "N/A" : osrsDetails.bosses[boss].rank}</td>
-                  </tr>
-                ))}
-                <tr>
-                  <td style={{ fontWeight: "bold" }}>Total</td>
-                  <td style={{ fontWeight: "bold" }}>
-                    {Object.values(osrsDetails.bosses).reduce(
-                      (total: number, boss: any) => (boss.kills !== -1 ? total + boss.kills : total),
-                      0
-                    )}
-                  </td>
-                  <td style={{ fontWeight: "bold" }} />
-                </tr>
-              </tbody>
-            </table>
-          </Tab>
-          <Tab eventKey="raids" title="Raids">
-            <table className="table table-striped table-bordered mb-4">
-              <thead>
-                <tr>
-                  <th>Raid</th>
-                  <th>Completions</th>
-                  <th>Rank</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.keys(osrsDetails.raids).map((raid: string) => (
-                  <tr key={raid}>
-                    <td style={{ color: hardModeRaids.includes(raid) ? "red" : "black" }}>
-                      {raid.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())}
-                    </td>
-                    <td>{osrsDetails.raids[raid].kills === -1 ? "N/A" : osrsDetails.raids[raid].kills}</td>
-                    <td>{osrsDetails.raids[raid].rank === -1 ? "N/A" : osrsDetails.raids[raid].rank}</td>
-                  </tr>
-                ))}
-                <tr>
-                  <td style={{ fontWeight: "bold" }}>Total</td>
-                  <td style={{ fontWeight: "bold" }}>
-                    {Object.values(osrsDetails.raids).reduce(
-                      (total: number, raid: any) => (raid.kills !== -1 ? total + raid.kills : total),
-                      0
-                    )}
-                  </td>
-                  <td style={{ fontWeight: "bold" }} />
-                </tr>
-              </tbody>
-            </table>
-          </Tab>
-          <Tab eventKey="activities" title="Minigames">
-            <table className="table table-striped table-bordered mb-4">
-              <thead>
-                <tr>
-                  <th>Activity</th>
-                  <th>Score</th>
-                  <th>Rank</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.keys(osrsDetails.activities)
-                  .filter((activity: string) => !activity.startsWith("clue_scrolls"))
-                  .map((activity: string) => (
-                    <tr key={activity}>
-                      <td>{activity.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())}</td>
-                      <td>{osrsDetails.activities[activity]?.score === -1 ? "N/A" : osrsDetails.activities[activity]?.score}</td>
-                      <td>{osrsDetails.activities[activity]?.rank === -1 ? "N/A" : osrsDetails.activities[activity]?.rank}</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </Tab>
+                  <Tr fontWeight="bold">
+                    <Td>Total</Td>
+                    <Td>
+                      {Object.values(osrsDetails.raids).reduce(
+                        (total: number, raid: any) =>
+                          raid.kills !== -1 ? total + raid.kills : total,
+                        0
+                      )}
+                    </Td>
+                    <Td />
+                  </Tr>
+                </Tbody>
+              </Table>
+            </TabPanel>
+            {/* Minigames */}
+            <TabPanel>
+              <Table variant="striped" size="sm" mb={4}>
+                <Thead>
+                  <Tr>
+                    <Th>Activity</Th>
+                    <Th>Score</Th>
+                    <Th>Rank</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {Object.keys(osrsDetails.activities)
+                    .filter((activity: string) => !activity.startsWith("clue_scrolls"))
+                    .map((activity: string) => (
+                      <Tr key={activity}>
+                        <Td>
+                          {activity
+                            .replace(/_/g, " ")
+                            .replace(/\b\w/g, (l) => l.toUpperCase())}
+                        </Td>
+                        <Td>
+                          {osrsDetails.activities[activity]?.score === -1
+                            ? "N/A"
+                            : osrsDetails.activities[activity]?.score}
+                        </Td>
+                        <Td>
+                          {osrsDetails.activities[activity]?.rank === -1
+                            ? "N/A"
+                            : osrsDetails.activities[activity]?.rank}
+                        </Td>
+                      </Tr>
+                    ))}
+                </Tbody>
+              </Table>
+            </TabPanel>
+          </TabPanels>
         </Tabs>
       )}
-    </div>
+    </Box>
   );
 };
 

@@ -1,10 +1,13 @@
 import React from 'react';
-import Card from 'react-bootstrap/Card';
-import Badge from 'react-bootstrap/Badge';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Image from 'react-bootstrap/Image';
-
+import {
+  Box,
+  Flex,
+  Badge,
+  Image,
+  Text,
+  HStack,
+  VStack,
+} from "@chakra-ui/react";
 import {
   stopwatch,
   defaultImage,
@@ -31,152 +34,153 @@ import {
 } from './imageImports';
 
 interface PlayerCardProps {
-    level: number;
-    account_type: string;
-    ca_score: number;
-    username: string;
-    timezone: string;
-    hours: string;
-    notes: string;
-    has_shadow?: boolean;
-    has_tbow?: boolean;
-    has_scythe?: boolean;
-    has_quiver?: boolean;
-    has_infernal?: boolean;
+  level: number;
+  account_type: string;
+  ca_score: number;
+  username: string;
+  timezone: string;
+  hours: string;
+  notes: string;
+  has_shadow?: boolean;
+  has_tbow?: boolean;
+  has_scythe?: boolean;
+  has_quiver?: boolean;
+  has_infernal?: boolean;
 }
 
 const accountTypes = new Map<string, any>([
-    ["MAIN", type_main],
-    ["IRON", type_iron],
-    ["HCIM", type_hcim],
-    ["UIM", type_uim],
-    ["GIM", type_gim],
-    ["HCGIM", type_hcgim],
-    ["UGIM", type_ugim],
-    ["SNOWFLAKE", type_snowflake],
+  ["MAIN", type_main],
+  ["IRON", type_iron],
+  ["HCIM", type_hcim],
+  ["UIM", type_uim],
+  ["GIM", type_gim],
+  ["HCGIM", type_hcgim],
+  ["UGIM", type_ugim],
+  ["SNOWFLAKE", type_snowflake],
 ]);
 
 const caIcons = new Map<number, any>([
-    [2525, ca_gm],
-    [1841, ca_master],
-    [1026, ca_elite],
-    [394, ca_hard],
-    [148, ca_med],
+  [2525, ca_gm],
+  [1841, ca_master],
+  [1026, ca_elite],
+  [394, ca_hard],
+  [148, ca_med],
 ]);
 
 const achievementIcons = [
-    { prop: "has_quiver", img: achieve_quiver },
-    { prop: "has_infernal", img: achieve_cape },
-    { prop: "has_scythe", img: mega_scythe },
-    { prop: "has_shadow", img: mega_staff },
-    { prop: "has_tbow", img: mega_bow },
+  { prop: "has_quiver", img: achieve_quiver },
+  { prop: "has_infernal", img: achieve_cape },
+  { prop: "has_scythe", img: mega_scythe },
+  { prop: "has_shadow", img: mega_staff },
+  { prop: "has_tbow", img: mega_bow },
 ];
 
 const PlayerCard: React.FC<PlayerCardProps> = ({
-    level,
-    account_type,
-    ca_score,
-    username,
-    timezone,
-    hours,
-    notes,
-    has_shadow = false,
-    has_tbow = false,
-    has_scythe = false,
-    has_quiver = false,
-    has_infernal = false,
+  level,
+  account_type,
+  ca_score,
+  username,
+  timezone,
+  hours,
+  notes,
+  has_shadow = false,
+  has_tbow = false,
+  has_scythe = false,
+  has_quiver = false,
+  has_infernal = false,
 }) => {
-    let account_type_ico = type_unknown;
-    if (accountTypes.has(account_type)) {
-        account_type_ico = accountTypes.get(account_type);
+  let account_type_ico = type_unknown;
+  if (accountTypes.has(account_type)) {
+    account_type_ico = accountTypes.get(account_type);
+  }
+
+  let ca_icon = ca_easy;
+  for (const [minPoints, ico] of caIcons) {
+    if (ca_score >= minPoints) {
+      ca_icon = ico;
+      break;
     }
+  }
 
-    let ca_icon = ca_easy;
-    for (const [minPoints, ico] of caIcons) {
-        if (ca_score >= minPoints) {
-            ca_icon = ico;
-            break;
-        }
+  const activeAchievements = achievementIcons.filter(icon => {
+    switch (icon.prop) {
+      case "has_quiver": return has_quiver;
+      case "has_infernal": return has_infernal;
+      case "has_scythe": return has_scythe;
+      case "has_shadow": return has_shadow;
+      case "has_tbow": return has_tbow;
+      default: return false;
     }
+  });
 
-    const activeAchievements = achievementIcons.filter(icon => {
-        switch (icon.prop) {
-            case "has_quiver": return has_quiver;
-            case "has_infernal": return has_infernal;
-            case "has_scythe": return has_scythe;
-            case "has_shadow": return has_shadow;
-            case "has_tbow": return has_tbow;
-            default: return false;
-        }
-    });
+  return (
+    <Box borderWidth="1px" borderRadius="lg" overflow="hidden" bg="white" w="300px" boxShadow="md">
+      <Flex align="center" bg="gray.100" borderTopRadius="lg">
+        <VStack spacing={-5} ml={4}>
+          <Text color="gray.600" lineHeight="1.1">Total:</Text>
+          <Badge bg="green" color="white" borderRadius="full" px={3} minH="25px" alignItems="center" justifyContent="center" display="flex" mt="-10px">{level}</Badge>
+        </VStack>
+        <Flex flex="1" mx={4} mt={4} align="center">
+          <Text
+            fontWeight="bold"
+            fontSize="xl"
+            color="white"
+            bg="gray.700"
+            borderRadius="md"
+            px={3}
+            py={1}
+            w="100%"
+            minH="50px"
+            alignContent={"center"}
+            textAlign={"center"}
+          >
+            {username}
+          </Text>
+        </Flex>
+      </Flex>
 
-    return (
-    <Card border="secondary" className="mb-3" style={{ width: 300+"px" }}>
-      <Card.Header>
-        <Row className="text-center align-items-center">
-          <Col md="3" className="align-self-start">
-            Total:
-            <br />
-            <Badge bg="success" pill>
-              {level}
-            </Badge>
-          </Col>
-          <Col className='badge text-bg-secondary'>
-            <h4>
-              {username}
-            </h4>
-          </Col>
-        </Row>
-      </Card.Header>
-      <Card.Body>
-        <Image src={defaultImage} style={{ maxWidth: 280 }} fluid />
-      </Card.Body>
-      <Card.Body>
-        <Row className="text-center align-items-center">
-          <Col sm={6}>
-            <Row className="text-center align-items-center">
-              <Col md={5}>
-                <Image src={stopwatch} style={{ maxWidth: 40 }} />
-              </Col>
-              <Col md={7}>
-                <Row>
-                  <Badge bg="primary">
-                    <h5>{timezone}</h5>
-                  </Badge>
-                </Row>
-                <Row>
-                  <Badge bg="secondary" className="rounded">
-                    {hours} hours
-                  </Badge>
-                </Row>
-              </Col>
-            </Row>
-          </Col>
-          <Col sm={6}>
-            <Row className="align-items-center">
-              <Image src={ca_icon} style={{ width: 60, height: 40 }} fluid />
-              {ca_score}
-            </Row>
-            <Row className="align-items-center">
-              <Image src={account_type_ico} style={{ maxWidth: 60 }} fluid />
-              {account_type}
-            </Row>
-          </Col>
-        </Row>
-      </Card.Body>
+      <Flex justify="center" align="center" p={3}>
+        <Image src={defaultImage} maxW="280px" borderRadius="md" />
+      </Flex>
+
+      <HStack mr="10px">
+        <VStack width="60px">
+          <Image src={stopwatch} maxW="40px" />
+        </VStack>
+        <VStack width="120px">
+          <Badge bg="blue.500" color="white" fontSize="md" borderRadius="md" w="full" textAlign={"center"} alignItems={"center"} justifyContent={"center"} display={"flex"} minH="40px">
+            {timezone}
+          </Badge>
+          <Badge bg="gray.600" color="white" fontSize="md" borderRadius="md" w="full" textAlign={"center"} alignItems={"center"} justifyContent={"center"} display={"flex"} minH="40px">
+            {hours} hrs
+          </Badge>
+        </VStack>
+        <VStack maxW="90px">
+          <HStack alignContent={"center"} justifyContent={"center"} display={"flex"} textAlign={"center"}>
+            <Image src={ca_icon} w="40px" h="40px" />
+            <Badge bg={"transparent"} textAlign={"center"} alignItems={"center"} justifyContent={"center"} display={"flex"} fontWeight="bold" fontSize="md">{ca_score}</Badge>
+          </HStack>
+          <HStack alignContent={"center"} justifyContent={"center"} display={"flex"} textAlign={"center"}>
+            <Image src={account_type_ico} maxW="40px" />
+            <Badge bg={"transparent"} fontWeight="bold" fontSize="md">{account_type}</Badge>
+          </HStack>
+        </VStack>
+      </HStack>
+
       {activeAchievements.length > 0 && (
-        <Card.Body>
-          <Row className="align-items-center">
+        <Flex p={3} justify="left" align="center">
+          <HStack >
             {activeAchievements.map((icon) => (
-              <Col xs={2} key={icon.prop}>
-                <Image src={icon.img} style={{ maxWidth: 40 }} fluid />
-              </Col>
+              <Image key={icon.prop} src={icon.img} maxW="40px" maxH="40px"/>
             ))}
-          </Row>
-        </Card.Body>
+          </HStack>
+        </Flex>
       )}
-      <Card.Body>{notes}</Card.Body>
-    </Card>
+
+      <Box p={3} borderBottomRadius="lg" bg="gray.50">
+        <Text fontSize="sm" color="gray.700">{notes}</Text>
+      </Box>
+    </Box>
   );
 };
 
