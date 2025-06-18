@@ -1,6 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Table, Spinner, Row, Col, Card, Alert } from "react-bootstrap";
+import {
+  Box,
+  Text,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Spinner,
+  HStack,
+  Spacer,
+} from "@chakra-ui/react";
 
 type Participant = {
   displayName: string;
@@ -91,90 +103,109 @@ const WOMEventDetails: React.FC = () => {
 
   if (loading) {
     return (
-      <Container className="text-center my-5">
-        <Spinner animation="border" role="status" />
-        <div className="mt-3">Loading competition details...</div>
-      </Container>
+      <Box textAlign="center" mt={8}>
+        <Spinner size="xl" />
+        <Text mt={4}>Loading competition details...</Text>
+      </Box>
     );
   }
 
   if (!competitionDetails) {
     return (
-      <Container className="text-center my-5">
-        <Alert variant="danger">Failed to load competition details.</Alert>
-      </Container>
+      <Box textAlign="center" mt={8}>
+        <Text fontSize="lg" color="red.500">
+          Failed to load competition details.
+        </Text>
+      </Box>
     );
   }
 
   return (
-    <Container className="mt-4">
-      <Row className="mb-4 align-items-center">
-        <Col>
-          <h2>{competitionDetails.title}</h2>
-          <div>
+    <Box p={4}>
+      <HStack pb={4} alignItems="flex-start">
+        <Box>
+          <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
+            <Text as="h2" fontSize="2xl">
+              {competitionDetails.title}
+            </Text>
+          </Box>
+          <Text mb={2}>
             <strong>Start Date:</strong> {new Date(competitionDetails.startsAt).toLocaleString()}
-          </div>
-          <div>
+          </Text>
+          <Text mb={2}>
             <strong>End Date:</strong> {new Date(competitionDetails.endsAt).toLocaleString()}
-          </div>
-        </Col>
-        <Col md="auto">
-          <Card bg="dark" text="white" className="p-3" style={{ minWidth: 250 }}>
-            <Card.Body>
-              <Card.Title className="mb-2" style={{ fontSize: "1rem" }}>
-                {new Date() < new Date(competitionDetails.startsAt)
-                  ? "Time Until Start"
-                  : "Time Remaining"}
-              </Card.Title>
-              <div className="d-flex justify-content-between">
-                <div className="text-center">
-                  <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{timeRemaining.days}</div>
-                  <div style={{ fontSize: "0.8rem" }}>days</div>
-                </div>
-                <div className="text-center">
-                  <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{timeRemaining.hours}</div>
-                  <div style={{ fontSize: "0.8rem" }}>hours</div>
-                </div>
-                <div className="text-center">
-                  <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{timeRemaining.minutes}</div>
-                  <div style={{ fontSize: "0.8rem" }}>mins</div>
-                </div>
-                <div className="text-center">
-                  <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{timeRemaining.seconds}</div>
-                  <div style={{ fontSize: "0.8rem" }}>secs</div>
-                </div>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Gamer</th>
-            <th className="text-end">XP Gained</th>
-            <th className="text-end">Starting XP</th>
-            <th className="text-end">Ending XP</th>
-          </tr>
-        </thead>
-        <tbody>
+          </Text>
+        </Box>
+        <Spacer />
+        <Box
+          textAlign="center"
+          bg="gray.800"
+          color="white"
+          w="300px"
+          p={4}
+          borderRadius="md"
+          boxShadow="md"
+        >
+          <Text fontSize="md" mb={2}>
+            {new Date() < new Date(competitionDetails.startsAt)
+              ? "Time Until Start"
+              : "Time Remaining"}
+          </Text>
+          <Box display="flex" justifyContent="center" alignItems="center" gap={4}>
+            <Box textAlign="center">
+              <Text fontSize="2xl" fontWeight="bold">
+                {timeRemaining.days}
+              </Text>
+              <Text fontSize="sm">days</Text>
+            </Box>
+            <Box textAlign="center">
+              <Text fontSize="2xl" fontWeight="bold">
+                {timeRemaining.hours}
+              </Text>
+              <Text fontSize="sm">hours</Text>
+            </Box>
+            <Box textAlign="center">
+              <Text fontSize="2xl" fontWeight="bold">
+                {timeRemaining.minutes}
+              </Text>
+              <Text fontSize="sm">mins</Text>
+            </Box>
+            <Box textAlign="center">
+              <Text fontSize="2xl" fontWeight="bold">
+                {timeRemaining.seconds}
+              </Text>
+              <Text fontSize="sm">secs</Text>
+            </Box>
+          </Box>
+        </Box>
+      </HStack>
+      <Table variant="simple" mt={4}>
+        <Thead>
+          <Tr>
+            <Th>Gamer</Th>
+            <Th textAlign="right">XP Gained</Th>
+            <Th textAlign="right">Starting XP</Th>
+            <Th textAlign="right">Ending XP</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
           {competitionDetails.participants
             .filter((participant) => participant.gained > 0)
             .map((participant) => (
-              <tr key={participant.displayName}>
-                <td>{participant.displayName}</td>
-                <td className="text-end">{participant.gained.toLocaleString()}</td>
-                <td className="text-end">
+              <Tr key={participant.displayName}>
+                <Td>{participant.displayName}</Td>
+                <Td textAlign="right">{participant.gained.toLocaleString()}</Td>
+                <Td textAlign="right">
                   {participant.start?.toLocaleString() || "N/A"}
-                </td>
-                <td className="text-end">
+                </Td>
+                <Td textAlign="right">
                   {participant.end?.toLocaleString() || "N/A"}
-                </td>
-              </tr>
+                </Td>
+              </Tr>
             ))}
-        </tbody>
+        </Tbody>
       </Table>
-    </Container>
+    </Box>
   );
 };
 

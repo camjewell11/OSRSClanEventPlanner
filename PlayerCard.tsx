@@ -161,7 +161,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
            <HStack>
             <Image src={ca_icon} w="40px" h="40px" />
             <Text fontWeight="bold" fontSize="md">{ca_score}</Text>
-          </HStack>
+            </HStack>
           <HStack>
             <Image src={account_type_ico} maxW="40px" />
             <Text fontSize="md">{account_type}</Text>
