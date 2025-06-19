@@ -114,7 +114,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
   });
 
   return (
-    <Box borderWidth="1px" borderRadius="lg" overflow="hidden" bg="white" w="300px" boxShadow="md">
+    <Box borderWidth="1px" borderRadius="lg" overflow="hidden" bg="white" w="300px" boxShadow="md" flexShrink={0}>
       <Flex align="center" bg="gray.100" borderTopRadius="lg">
         <VStack spacing={-5} ml={4}>
           <Text color="gray.600" lineHeight="1.1">Total:</Text>

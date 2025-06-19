@@ -1,9 +1,19 @@
-import { HStack } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import PlayerCard from "../PlayerCard"
 
 export default function Home() {
   return (
-    <HStack>
+    <Flex
+      direction="row"
+      flexWrap="wrap"
+      gap={4}
+      py={2}
+      px={2}
+      width="100%"
+      maxH="80vh"
+      overflowY="auto"
+      alignItems="flex-start"
+    >
       <PlayerCard
         level={2277}
         account_type={"MAIN"}
@@ -13,7 +23,7 @@ export default function Home() {
         timezone={"EST"}
         has_shadow={true}
         notes="test"
-        />
+      />
       <PlayerCard
         level={2173}
         account_type={"MAIN"}
@@ -36,7 +46,7 @@ export default function Home() {
         has_quiver={true}
         has_infernal={true}
         notes="Shadow spooner"
-        />
-      </HStack>
+      />
+    </Flex>
   );
 }
