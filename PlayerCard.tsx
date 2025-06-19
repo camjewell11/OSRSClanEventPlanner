@@ -8,30 +8,8 @@ import {
   HStack,
   VStack,
 } from "@chakra-ui/react";
-import {
-  stopwatch,
-  defaultImage,
-  ca_gm,
-  ca_master,
-  ca_elite,
-  ca_hard,
-  ca_med,
-  ca_easy,
-  achieve_quiver,
-  achieve_cape,
-  mega_bow,
-  mega_staff,
-  mega_scythe,
-  type_unknown,
-  type_main,
-  type_iron,
-  type_hcim,
-  type_uim,
-  type_gim,
-  type_hcgim,
-  type_ugim,
-  type_snowflake,
-} from "./imageImports";
+import { stopwatch, defaultImage, type_unknown, ca_easy } from "./imageImports";
+import { accountTypes, caIcons, achievementIcons } from "./Information";
 
 interface PlayerCardProps {
   level: number;
@@ -48,33 +26,6 @@ interface PlayerCardProps {
   has_infernal?: boolean;
   inDraft?: boolean;
 }
-
-const accountTypes = new Map<string, any>([
-  ["MAIN", type_main],
-  ["IRON", type_iron],
-  ["HCIM", type_hcim],
-  ["UIM", type_uim],
-  ["GIM", type_gim],
-  ["HCGIM", type_hcgim],
-  ["UGIM", type_ugim],
-  ["SNOWFLAKE", type_snowflake],
-]);
-
-const caIcons = new Map<number, any>([
-  [2525, ca_gm],
-  [1841, ca_master],
-  [1026, ca_elite],
-  [394, ca_hard],
-  [148, ca_med],
-]);
-
-const achievementIcons = [
-  { prop: "has_quiver", img: achieve_quiver },
-  { prop: "has_infernal", img: achieve_cape },
-  { prop: "has_scythe", img: mega_scythe },
-  { prop: "has_shadow", img: mega_staff },
-  { prop: "has_tbow", img: mega_bow },
-];
 
 const PlayerCard: React.FC<PlayerCardProps> = ({
   level,
