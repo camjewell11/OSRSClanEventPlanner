@@ -114,18 +114,30 @@ const Statistics: React.FC = () => {
                     .filter((skill) => skill !== "overall")
                     .map((skill) => (
                       <Tr key={skill}>
-                        <Td color={memberSkills.includes(skill) ? "blue.500" : undefined}>
+                        <Td
+                          color={
+                            memberSkills.includes(skill)
+                              ? "blue.500"
+                              : undefined
+                          }
+                        >
                           {skill.charAt(0).toUpperCase() + skill.slice(1)}
                         </Td>
                         <Td>{osrsDetails.skills[skill].level}</Td>
-                        <Td>{osrsDetails.skills[skill].experience.toLocaleString()}</Td>
+                        <Td>
+                          {osrsDetails.skills[
+                            skill
+                          ].experience.toLocaleString()}
+                        </Td>
                         <Td>{osrsDetails.skills[skill].rank}</Td>
                       </Tr>
                     ))}
                   <Tr fontWeight="bold">
                     <Td>Total</Td>
                     <Td>{osrsDetails.skills.overall.level}</Td>
-                    <Td>{osrsDetails.skills.overall.experience.toLocaleString()}</Td>
+                    <Td>
+                      {osrsDetails.skills.overall.experience.toLocaleString()}
+                    </Td>
                     <Td />
                   </Tr>
                 </Tbody>
@@ -197,10 +209,10 @@ const Statistics: React.FC = () => {
                           wildernessBosses.includes(boss)
                             ? "red.500"
                             : multiCombatBosses.includes(boss)
-                            ? "green.500"
-                            : slayerOnlyMonsters.includes(boss)
-                            ? "blue.500"
-                            : undefined
+                              ? "green.500"
+                              : slayerOnlyMonsters.includes(boss)
+                                ? "blue.500"
+                                : undefined
                         }
                       >
                         {boss
@@ -246,7 +258,11 @@ const Statistics: React.FC = () => {
                 <Tbody>
                   {Object.keys(osrsDetails.raids).map((raid: string) => (
                     <Tr key={raid}>
-                      <Td color={hardModeRaids.includes(raid) ? "red.500" : undefined}>
+                      <Td
+                        color={
+                          hardModeRaids.includes(raid) ? "red.500" : undefined
+                        }
+                      >
                         {raid
                           .replace(/_/g, " ")
                           .replace(/\b\w/g, (l) => l.toUpperCase())}
@@ -289,7 +305,9 @@ const Statistics: React.FC = () => {
                 </Thead>
                 <Tbody>
                   {Object.keys(osrsDetails.activities)
-                    .filter((activity: string) => !activity.startsWith("clue_scrolls"))
+                    .filter(
+                      (activity: string) => !activity.startsWith("clue_scrolls")
+                    )
                     .map((activity: string) => (
                       <Tr key={activity}>
                         <Td>

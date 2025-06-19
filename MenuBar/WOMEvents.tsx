@@ -50,23 +50,29 @@ const WOMEvents: React.FC = () => {
     fetchCompetitions();
   }, []);
 
-const getRowBg = (comp: Competition) => {
-  const now = new Date();
-  const start = new Date(comp.startsAt);
-  const end = new Date(comp.endsAt);
+  const getRowBg = (comp: Competition) => {
+    const now = new Date();
+    const start = new Date(comp.startsAt);
+    const end = new Date(comp.endsAt);
 
-  if (now >= start && now <= end) {
-    return "green.200";
-  } else if (now > end) {
-    return "red.200";
-  } else {
-    return undefined;
-  }
-};
+    if (now >= start && now <= end) {
+      return "green.200";
+    } else if (now > end) {
+      return "red.200";
+    } else {
+      return undefined;
+    }
+  };
 
   if (loading) {
     return (
-      <Flex direction="column" align="center" justify="center" minH="60vh" w="100%">
+      <Flex
+        direction="column"
+        align="center"
+        justify="center"
+        minH="60vh"
+        w="100%"
+      >
         <Spinner size="xl" my={10} />
       </Flex>
     );
@@ -81,7 +87,14 @@ const getRowBg = (comp: Competition) => {
       alignItems="center"
       px={{ base: 2, md: 0 }}
     >
-      <Text as="h2" fontSize="2xl" fontWeight="bold" alignSelf="flex-start" ml={{ base: 0, md: "2.5vw" }} mb={4}>
+      <Text
+        as="h2"
+        fontSize="2xl"
+        fontWeight="bold"
+        alignSelf="flex-start"
+        ml={{ base: 0, md: "2.5vw" }}
+        mb={4}
+      >
         Clan Events
       </Text>
       {error && (
@@ -124,7 +137,8 @@ const getRowBg = (comp: Competition) => {
       <Box w="95vw" maxW="container.lg" my={6}>
         <Alert status="info" borderRadius="md">
           <AlertIcon />
-          You must have the WiseOldMan plugin installed in Runelite to track event statistics.
+          You must have the WiseOldMan plugin installed in Runelite to track
+          event statistics.
         </Alert>
       </Box>
     </Box>

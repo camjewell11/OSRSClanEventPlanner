@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import PlayerCard from "../PlayerCard"
+import PlayerCard from "../PlayerCard";
 
 export default function Home() {
   return (

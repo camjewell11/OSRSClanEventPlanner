@@ -53,23 +53,6 @@ const DraftPlayerCard: React.FC<DraftPlayerCardProps> = ({
     }
   }
 
-  const activeAchievements = achievementIcons.filter((icon) => {
-    switch (icon.prop) {
-      case "has_quiver":
-        return has_quiver;
-      case "has_infernal":
-        return has_infernal;
-      case "has_scythe":
-        return has_scythe;
-      case "has_shadow":
-        return has_shadow;
-      case "has_tbow":
-        return has_tbow;
-      default:
-        return false;
-    }
-  });
-
   return (
     <Box
       borderWidth="1px"

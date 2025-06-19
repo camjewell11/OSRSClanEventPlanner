@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Box, Flex, Input, VStack, Text, SimpleGrid } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Input,
+  VStack,
+  Text,
+  SimpleGrid,
+  Button,
+} from "@chakra-ui/react";
 import DraftPlayerCard from "./DraftPlayerCard";
 import PlayerCard from "../PlayerCard";
 
@@ -166,8 +174,11 @@ const Draft: React.FC = () => {
           <Text fontWeight="bold" mb={2}>
             Available Players
           </Text>
-          // ...existing code...
-          <SimpleGrid columns={[1, 2, 3, 4]} spacing={4} w="100%">
+          <SimpleGrid
+            columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
+            spacing={4}
+            w="100%"
+          >
             {filteredPlayers.map((player) => (
               <Box
                 key={player.id}
@@ -182,13 +193,15 @@ const Draft: React.FC = () => {
                     ? "3px solid #3182ce"
                     : "1px solid transparent"
                 }
+                bg="gray.100"
                 borderRadius="md"
+                boxShadow="none"
+                transition="border 0.2s"
               >
                 <DraftPlayerCard {...player} />
               </Box>
             ))}
           </SimpleGrid>
-          // ...existing code...
         </VStack>
       </Flex>
 
@@ -227,6 +240,14 @@ const Draft: React.FC = () => {
             ×
           </Box>
           <PlayerCard {...selectedPlayer} />
+          <Button
+            mt={4}
+            colorScheme="blue"
+            width="100%"
+            onClick={() => alert("Drafting player...")}
+          >
+            Draft Player
+          </Button>
         </Box>
       )}
     </Flex>
