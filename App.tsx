@@ -15,7 +15,7 @@ import Draft from "./CurrentEvent/Draft";
 const App: React.FC = () => (
   <Router>
     <MenuBar />
-    <div className="container">
+    <div>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/my-profile" element={<MyProfile />} />

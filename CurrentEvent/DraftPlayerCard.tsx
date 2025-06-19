@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Flex,
@@ -10,7 +9,6 @@ import {
 } from "@chakra-ui/react";
 import {
   stopwatch,
-  defaultImage,
   ca_gm,
   ca_master,
   ca_elite,
@@ -31,9 +29,10 @@ import {
   type_hcgim,
   type_ugim,
   type_snowflake,
-} from "./imageImports";
+  defaultImage,
+} from "../imageImports";
 
-interface PlayerCardProps {
+interface DraftPlayerCardProps {
   level: number;
   account_type: string;
   ca_score: number;
@@ -46,7 +45,6 @@ interface PlayerCardProps {
   has_scythe?: boolean;
   has_quiver?: boolean;
   has_infernal?: boolean;
-  inDraft?: boolean;
 }
 
 const accountTypes = new Map<string, any>([
@@ -76,7 +74,7 @@ const achievementIcons = [
   { prop: "has_tbow", img: mega_bow },
 ];
 
-const PlayerCard: React.FC<PlayerCardProps> = ({
+const DraftPlayerCard: React.FC<DraftPlayerCardProps> = ({
   level,
   account_type,
   ca_score,
@@ -89,7 +87,6 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
   has_scythe = false,
   has_quiver = false,
   has_infernal = false,
-  inDraft = false,
 }) => {
   let account_type_ico = type_unknown;
   if (accountTypes.has(account_type)) {
@@ -130,6 +127,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
       w="300px"
       boxShadow="md"
       flexShrink={0}
+      cursor="pointer"
     >
       <Flex align="center" bg="gray.100" borderTopRadius="lg">
         <VStack spacing={-5} ml={4}>
@@ -169,13 +167,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
         </Flex>
       </Flex>
 
-      {!inDraft ? (
-        <Flex justify="center" align="center" p={3}>
-          <Image src={defaultImage} maxW="280px" borderRadius="md" />
-        </Flex>
-      ) : (
-        <Box mt={3} />
-      )}
+      <Box mt={3} />
 
       <HStack mr="10px" mb="10px">
         <VStack width="60px">
@@ -244,26 +236,8 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
           </HStack>
         </VStack>
       </HStack>
-
-      {activeAchievements.length > 0 && (
-        <Flex p={3} justify="left" align="center">
-          <HStack>
-            {activeAchievements.map((icon) => (
-              <Image key={icon.prop} src={icon.img} maxW="40px" maxH="40px" />
-            ))}
-          </HStack>
-        </Flex>
-      )}
-
-      {!inDraft && (
-        <Box p={3} borderBottomRadius="lg" bg="gray.50">
-          <Text fontSize="sm" color="gray.700">
-            {notes}
-          </Text>
-        </Box>
-      )}
     </Box>
   );
 };
 
-export default PlayerCard;
+export default DraftPlayerCard;
