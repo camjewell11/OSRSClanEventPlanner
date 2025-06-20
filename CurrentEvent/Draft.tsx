@@ -167,7 +167,7 @@ const Draft: React.FC = () => {
           maxW="400px"
           bg="gray.100"
           borderRadius="md"
-          p={4}
+          pt={4}
           ml={2}
           h="89vh"
           alignSelf="flex-start"
@@ -178,22 +178,37 @@ const Draft: React.FC = () => {
           alignItems="center"
           mt="75px"
         >
-          <Box
-            alignSelf="flex-end"
-            cursor="pointer"
-            fontWeight="bold"
-            fontSize="3xl"
-            color="gray.500"
-            _hover={{ color: "red.500" }}
-            onClick={() => setSelectedPlayer(null)}
-            zIndex={1}
-            lineHeight="1"
-            mb={2}
-            mt={-2}
-            pr={1}
-          >
-            ×
-          </Box>
+          <HStack w="100%" justifyContent="space-between" mb={2}>
+            <Button
+              as="a"
+              href={`https://wiseoldman.net/players/${selectedPlayer.username}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              size="sm"
+              colorScheme="teal"
+              variant="outline"
+              mb={2}
+              ml={3}
+              alignSelf="left"
+            >
+              View WOM Profile
+            </Button>
+            <Box
+              alignSelf="right"
+              cursor="pointer"
+              fontWeight="bold"
+              fontSize="3xl"
+              color="gray.500"
+              _hover={{ color: "red.500" }}
+              onClick={() => setSelectedPlayer(null)}
+              zIndex={1}
+              lineHeight="1"
+              mb={3}
+              pr={4}
+            >
+              ×
+            </Box>
+          </HStack>
           <PlayerCard {...selectedPlayer} />
           <Button
             mt={4}
