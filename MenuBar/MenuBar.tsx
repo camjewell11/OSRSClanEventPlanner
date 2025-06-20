@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -8,8 +8,11 @@ import {
   Spacer,
   Switch,
   Link,
+  Button,
 } from "@chakra-ui/react";
 import "../global.css";
+import type { User } from "../CurrentEvent/Authentication/Login";
+import { dummyUser } from "../test/sampleLogin";
 
 const navLinks = [
   { name: "Home", to: "/" },
@@ -21,8 +24,20 @@ const navLinks = [
   { name: "Admin", to: "/admin" },
 ];
 
-const MenuBar: React.FC = () => {
+interface MenuBarProps {
+  user: User | null;
+  setUser: (user: User | null) => void;
+}
+
+const MenuBar: React.FC<MenuBarProps> = ({ user, setUser }) => {
   const [streamerMode, setStreamerMode] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+    navigate("/");
+  };
 
   return (
     <Box
@@ -49,35 +64,73 @@ const MenuBar: React.FC = () => {
           OSRS Clan Planner
         </Text>
         <HStack as="ul" spacing={2} align="center">
-          {navLinks.map((link) => (
-            <Box
-              as="li"
-              key={link.name}
-              listStyleType="none"
-              px={2}
-              py={1}
-              borderRadius="md"
-              transition="background 0.2s"
-              whiteSpace="nowrap"
-            >
-              <Link
-                as={RouterLink}
-                to={link.to}
-                fontWeight="medium"
+          {navLinks
+            .filter((link) => link.name !== "Admin" || (user && user.isAdmin))
+            .map((link) => (
+              <Box
+                as="li"
+                key={link.name}
+                listStyleType="none"
+                px={2}
+                py={1}
+                borderRadius="md"
+                transition="background 0.2s"
                 whiteSpace="nowrap"
-                color={"white"}
-                _hover={{
-                  color: "blue.200",
-                  textDecoration: "underline !important",
-                }}
               >
-                {link.name}
-              </Link>
-            </Box>
-          ))}
+                <Link
+                  as={RouterLink}
+                  to={link.to}
+                  fontWeight="medium"
+                  whiteSpace="nowrap"
+                  color={"white"}
+                  _hover={{
+                    color: "blue.200",
+                    textDecoration: "underline !important",
+                  }}
+                >
+                  {link.name}
+                </Link>
+              </Box>
+            ))}
+          {!user ? (
+            <>
+              <Button
+                colorScheme="teal"
+                variant="outline"
+                size="sm"
+                ml={2}
+                onClick={() => navigate("/login")}
+              >
+                Login / Sign Up
+              </Button>
+              <Button
+                colorScheme="yellow"
+                variant="outline"
+                size="sm"
+                ml={2}
+                onClick={() => setUser(dummyUser)}
+              >
+                Dummy Login
+              </Button>
+            </>
+          ) : (
+            <HStack>
+              <Text fontSize="sm" mx={2}>
+                {user.username}
+              </Text>
+              <Button
+                colorScheme="red"
+                variant="outline"
+                size="sm"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            </HStack>
+          )}
         </HStack>
         <Spacer />
-        <Flex align="center" ml={4} mt="-12px">
+        <Flex align="center" mx={4} mt="-12px">
           <Switch
             id="streamerModeSwitch"
             colorScheme="teal"
