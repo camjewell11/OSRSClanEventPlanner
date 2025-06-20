@@ -7,128 +7,35 @@ import {
   Text,
   SimpleGrid,
   Button,
+  HStack,
 } from "@chakra-ui/react";
 import DraftPlayerCard from "./DraftPlayerCard";
-import PlayerCard from "../PlayerCard";
+import PlayerCard, { type PlayerCardProps } from "../PlayerCard";
+import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 
-const initialPlayers: Player[] = [
-  {
-    id: "1",
-    username: "test",
-    level: 2277,
-    account_type: "MAIN",
-    ca_score: 2525,
-    hours: "40 - 50",
-    timezone: "EST",
-    notes: "test",
-    has_shadow: true,
-    has_tbow: true,
-    has_scythe: true,
-    has_quiver: true,
-    has_infernal: true,
-  },
-  {
-    id: "2",
-    username: "ThePrestiege",
-    level: 2173,
-    account_type: "MAIN",
-    ca_score: 1122,
-    hours: "40",
-    timezone: "CST",
-    notes: "A true gamer",
-    has_shadow: true,
-    has_tbow: false,
-    has_scythe: false,
-    has_quiver: false,
-    has_infernal: false,
-  },
-  {
-    id: "3",
-    username: "Maverick1184",
-    level: 1916,
-    account_type: "MAIN",
-    ca_score: 850,
-    hours: "25",
-    timezone: "CST",
-    notes: "A true gamer",
-    has_shadow: true,
-    has_tbow: true,
-    has_scythe: false,
-    has_quiver: true,
-    has_infernal: true,
-  },
-  {
-    id: "4",
-    username: "test",
-    level: 2277,
-    account_type: "MAIN",
-    ca_score: 2525,
-    hours: "40 - 50",
-    timezone: "EST",
-    notes: "test",
-    has_shadow: true,
-    has_tbow: true,
-    has_scythe: true,
-    has_quiver: true,
-    has_infernal: true,
-  },
-  {
-    id: "5",
-    username: "ThePrestiege",
-    level: 2173,
-    account_type: "MAIN",
-    ca_score: 1122,
-    hours: "40",
-    timezone: "CST",
-    notes: "A true gamer",
-    has_shadow: true,
-    has_tbow: false,
-    has_scythe: false,
-    has_quiver: false,
-    has_infernal: false,
-  },
-  {
-    id: "6",
-    username: "Maverick1184",
-    level: 1916,
-    account_type: "MAIN",
-    ca_score: 850,
-    hours: "25",
-    timezone: "CST",
-    notes: "A true gamer",
-    has_shadow: true,
-    has_tbow: true,
-    has_scythe: false,
-    has_quiver: true,
-    has_infernal: true,
-  },
-];
+import { initialPlayers } from "../test/sampleDraft";
 
-type Player = {
-  id: string;
-  username: string;
-  level: number;
-  account_type: string;
-  ca_score: number;
-  hours: string;
-  timezone: string;
-  notes: string;
-  has_shadow?: boolean;
-  has_tbow?: boolean;
-  has_scythe?: boolean;
-  has_quiver?: boolean;
-  has_infernal?: boolean;
-};
-
+const samplePlayers = initialPlayers;
 const Draft: React.FC = () => {
   const [search, setSearch] = useState("");
-  const [players] = useState(initialPlayers);
-  const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
+  const [players] = useState(samplePlayers);
+  const [selectedPlayer, setSelectedPlayer] = useState<PlayerCardProps | null>(null);
+
+  const [sortBy, setSortBy] = useState<"ca_score" | "level" | null>(null);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   // Filter players by search
-  const filteredPlayers = players.filter((p) =>
-    p.username.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredPlayers = players
+    .filter((p) =>
+      p.username.toLowerCase().includes(search.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (!sortBy) return 0;
+      const valA = a[sortBy];
+      const valB = b[sortBy];
+      if (sortOrder === "asc") return valA - valB;
+      return valB - valA;
+    });
 
   return (
     <Flex h="89vh" w="100vw">
@@ -151,15 +58,58 @@ const Draft: React.FC = () => {
         pl={4}
         mr="10px"
       >
-        {/* Search Bar */}
-        <Input
-          placeholder="Search by username"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          maxW="400px"
-          mb={4}
-          mt={2}
-        />
+        {/* Search Bar and Sort Buttons */}
+        <HStack w="100%" maxW="800px" mb={4} mt={2} spacing={4} align="center">
+          <Input
+            placeholder="Search by username"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            maxW="400px"
+          />
+          <Text fontWeight="semibold" color="gray.600" ml={2} mt={3}>
+            Sort by:
+          </Text>
+          <Button
+            size="sm"
+            variant={sortBy === "ca_score" ? "solid" : "outline"}
+            colorScheme="blue"
+            onClick={() => {
+              if (sortBy === "ca_score") {
+                setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+              } else {
+                setSortBy("ca_score");
+                setSortOrder("desc");
+              }
+            }}
+            leftIcon={
+              sortBy === "ca_score" ? (
+                sortOrder === "asc" ? <ChevronUpIcon /> : <ChevronDownIcon />
+              ) : undefined
+            }
+          >
+            CA Score
+          </Button>
+          <Button
+            size="sm"
+            variant={sortBy === "level" ? "solid" : "outline"}
+            colorScheme="blue"
+            onClick={() => {
+              if (sortBy === "level") {
+                setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+              } else {
+                setSortBy("level");
+                setSortOrder("desc");
+              }
+            }}
+            leftIcon={
+              sortBy === "level" ? (
+                sortOrder === "asc" ? <ChevronUpIcon /> : <ChevronDownIcon />
+              ) : undefined
+            }
+          >
+            Total Level
+          </Button>
+        </HStack>
         <VStack
           align="stretch"
           spacing={4}
@@ -175,7 +125,7 @@ const Draft: React.FC = () => {
             Available Players
           </Text>
           <SimpleGrid
-            columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
+            minChildWidth="260px"
             spacing={4}
             w="100%"
           >

@@ -11,7 +11,8 @@ import {
 import { stopwatch, defaultImage, type_unknown, ca_easy } from "./imageImports";
 import { accountTypes, caIcons, achievementIcons } from "./Information";
 
-interface PlayerCardProps {
+export interface PlayerCardProps {
+  id?: string
   level: number;
   account_type: string;
   ca_score: number;
