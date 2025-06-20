@@ -138,7 +138,7 @@ const Draft: React.FC = () => {
                     : setSelectedPlayer(player)
                 }
                 cursor="pointer"
-                border={
+                outline={
                   selectedPlayer && selectedPlayer.id === player.id
                     ? "3px solid #3182ce"
                     : "1px solid transparent"
@@ -147,6 +147,9 @@ const Draft: React.FC = () => {
                 borderRadius="md"
                 boxShadow="none"
                 transition="border 0.2s"
+                w="100%"
+                boxSizing="border-box"
+                p={1}
               >
                 <DraftPlayerCard {...player} />
               </Box>
@@ -172,6 +175,7 @@ const Draft: React.FC = () => {
           display="flex"
           flexDirection="column"
           alignItems="center"
+          mt="75px"
         >
           <Box
             alignSelf="flex-end"
