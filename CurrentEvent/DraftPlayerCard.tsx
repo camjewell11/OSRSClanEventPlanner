@@ -7,7 +7,7 @@ import {
   HStack,
   VStack,
 } from "@chakra-ui/react";
-import { stopwatch, ca_easy, type_unknown } from "../imageImports";
+import { defaultImage, ca_easy, type_unknown } from "../imageImports";
 
 import { accountTypes, caIcons, achievementIcons } from "../Information";
 
@@ -32,13 +32,7 @@ const DraftPlayerCard: React.FC<DraftPlayerCardProps> = ({
   ca_score,
   username,
   timezone,
-  hours,
-  notes,
-  has_shadow = false,
-  has_tbow = false,
-  has_scythe = false,
-  has_quiver = false,
-  has_infernal = false,
+  hours
 }) => {
   let account_type_ico = type_unknown;
   if (accountTypes.has(account_type)) {
@@ -106,7 +100,7 @@ const DraftPlayerCard: React.FC<DraftPlayerCardProps> = ({
 
       <HStack mr="10px" mb="10px">
         <VStack width="60px">
-          <Image src={stopwatch} maxW="40px" />
+          <Image src={defaultImage} maxW="40px" />
         </VStack>
         <VStack width="120px" mr="10px">
           <Badge
