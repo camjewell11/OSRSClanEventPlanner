@@ -125,7 +125,7 @@ const Draft: React.FC = () => {
             Available Players
           </Text>
           <SimpleGrid
-            minChildWidth="260px"
+            minChildWidth="300px"
             spacing={4}
             w="100%"
           >
@@ -147,9 +147,10 @@ const Draft: React.FC = () => {
                 borderRadius="md"
                 boxShadow="none"
                 transition="border 0.2s"
-                w="100%"
                 boxSizing="border-box"
                 p={1}
+                maxW="320px"
+                mx="auto"
               >
                 <DraftPlayerCard {...player} />
               </Box>
