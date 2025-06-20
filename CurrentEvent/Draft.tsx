@@ -11,9 +11,11 @@ import {
 } from "@chakra-ui/react";
 import DraftPlayerCard from "./DraftPlayerCard";
 import PlayerCard, { type PlayerCardProps } from "../PlayerCard";
+import CaptainCard from "./CaptainCard";
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 
-import { initialPlayers } from "../test/sampleDraft";
+import { initialPlayers, sampleCaptains } from "../test/sampleDraft";
+import { getSnakeDraftOrder } from "./DraftHelpers";
 
 const samplePlayers = initialPlayers;
 const Draft: React.FC = () => {
@@ -37,15 +39,44 @@ const Draft: React.FC = () => {
       return valB - valA;
     });
 
+  const draftOrder = getSnakeDraftOrder(sampleCaptains, filteredPlayers.length);
+
   return (
     <Flex h="89vh" w="100vw">
       {/* Draft Order Pane */}
       <Box flex="0 0 15%" bg="gray.100" borderRadius={"md"} p={4} ml="10px">
-        <Text fontWeight="bold" mb={2}>
+        <Text fontWeight="bold" mb={4}>
           Draft Order
         </Text>
         <VStack align="stretch" spacing={2}>
-          <Text color="gray.500">Coming soon...</Text>
+          {draftOrder.map((c, idx) => {
+            const captain = sampleCaptains.find(cap => cap.username === c.username);
+            return (
+              <Box
+                key={idx}
+                onClick={() => {
+                  if (
+                    selectedPlayer &&
+                    selectedPlayer.username === c.username
+                  ) {
+                    setSelectedPlayer(null);
+                  } else if (captain) {
+                    setSelectedPlayer(captain);
+                  }
+                }}
+                cursor="pointer"
+                outline={
+                  selectedPlayer && selectedPlayer.username === c.username
+                    ? "3px solid #3182ce"
+                    : "1px solid transparent"
+                }
+                borderRadius="md"
+                transition="border 0.2s"
+              >
+                <CaptainCard {...c} />
+              </Box>
+            );
+          })}
         </VStack>
       </Box>
 
