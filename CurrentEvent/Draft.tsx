@@ -200,7 +200,7 @@ const Draft: React.FC = () => {
           borderRadius="md"
           pt={4}
           ml={2}
-          h="89vh"
+          h="83vh"
           alignSelf="flex-start"
           mr="10px"
           position="relative"
@@ -241,14 +241,16 @@ const Draft: React.FC = () => {
             </Box>
           </HStack>
           <PlayerCard {...selectedPlayer} />
-          <Button
-            mt={4}
-            colorScheme="blue"
-            width="100%"
-            onClick={() => alert("Drafting player...")}
-          >
-            Draft Player
-          </Button>
+          {!sampleCaptains.some(c => c.username === selectedPlayer.username) && (
+            <Button
+              mt={4}
+              colorScheme="blue"
+              width="90%"
+              onClick={() => alert("Drafting player...")}
+            >
+              Draft Player
+            </Button>
+          )}
         </Box>
       )}
     </Flex>
