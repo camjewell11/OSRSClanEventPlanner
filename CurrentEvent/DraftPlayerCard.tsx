@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Flex,
@@ -8,11 +7,11 @@ import {
   HStack,
   VStack,
 } from "@chakra-ui/react";
-import { stopwatch, defaultImage, type_unknown, ca_easy } from "./imageImports";
-import { accountTypes, caIcons, achievementIcons } from "./Information";
+import { defaultImage, ca_easy, type_unknown } from "../imageImports";
 
-export interface PlayerCardProps {
-  id?: string
+import { accountTypes, caIcons, achievementIcons } from "../Information";
+
+interface DraftPlayerCardProps {
   level: number;
   account_type: string;
   ca_score: number;
@@ -25,23 +24,15 @@ export interface PlayerCardProps {
   has_scythe?: boolean;
   has_quiver?: boolean;
   has_infernal?: boolean;
-  inDraft?: boolean;
 }
 
-const PlayerCard: React.FC<PlayerCardProps> = ({
+const DraftPlayerCard: React.FC<DraftPlayerCardProps> = ({
   level,
   account_type,
   ca_score,
   username,
   timezone,
-  hours,
-  notes,
-  has_shadow = false,
-  has_tbow = false,
-  has_scythe = false,
-  has_quiver = false,
-  has_infernal = false,
-  inDraft = false,
+  hours
 }) => {
   let account_type_ico = type_unknown;
   if (accountTypes.has(account_type)) {
@@ -56,23 +47,6 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
     }
   }
 
-  const activeAchievements = achievementIcons.filter((icon) => {
-    switch (icon.prop) {
-      case "has_quiver":
-        return has_quiver;
-      case "has_infernal":
-        return has_infernal;
-      case "has_scythe":
-        return has_scythe;
-      case "has_shadow":
-        return has_shadow;
-      case "has_tbow":
-        return has_tbow;
-      default:
-        return false;
-    }
-  });
-
   return (
     <Box
       borderWidth="1px"
@@ -82,6 +56,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
       w="300px"
       boxShadow="md"
       flexShrink={0}
+      cursor="pointer"
     >
       <Flex align="center" bg="gray.100" borderTopRadius="lg">
         <VStack spacing={-5} ml={4}>
@@ -121,17 +96,11 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
         </Flex>
       </Flex>
 
-      {!inDraft ? (
-        <Flex justify="center" align="center" p={3}>
-          <Image src={defaultImage} maxW="280px" borderRadius="md" />
-        </Flex>
-      ) : (
-        <Box mt={3} />
-      )}
+      <Box mt={3} />
 
       <HStack mr="10px" mb="10px">
         <VStack width="60px">
-          <Image src={stopwatch} maxW="40px" />
+          <Image src={defaultImage} maxW="40px" />
         </VStack>
         <VStack width="120px" mr="10px">
           <Badge
@@ -196,26 +165,8 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
           </HStack>
         </VStack>
       </HStack>
-
-      {activeAchievements.length > 0 && (
-        <Flex p={3} justify="left" align="center">
-          <HStack>
-            {activeAchievements.map((icon) => (
-              <Image key={icon.prop} src={icon.img} maxW="40px" maxH="40px" />
-            ))}
-          </HStack>
-        </Flex>
-      )}
-
-      {!inDraft && (
-        <Box p={3} borderBottomRadius="lg" bg="gray.50">
-          <Text fontSize="sm" color="gray.700">
-            {notes}
-          </Text>
-        </Box>
-      )}
     </Box>
   );
 };
 
-export default PlayerCard;
+export default DraftPlayerCard;

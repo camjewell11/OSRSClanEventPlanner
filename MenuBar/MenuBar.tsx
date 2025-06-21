@@ -7,9 +7,9 @@ import {
   Text,
   Spacer,
   Switch,
-  Link
+  Link,
 } from "@chakra-ui/react";
-import '../global.css';
+import "../global.css";
 
 const navLinks = [
   { name: "Home", to: "/" },
@@ -25,7 +25,17 @@ const MenuBar: React.FC = () => {
   const [streamerMode, setStreamerMode] = useState(false);
 
   return (
-    <Box as="nav" bg="blue.700" color="white" mb={3} px={2} py={5} boxShadow="md" w="100%" h="75px">
+    <Box
+      as="nav"
+      bg="blue.700"
+      color="white"
+      mb={3}
+      px={2}
+      py={5}
+      boxShadow="md"
+      w="100%"
+      h="75px"
+    >
       <Flex align="center" justify="space-between">
         <Text
           as={RouterLink}
@@ -38,11 +48,7 @@ const MenuBar: React.FC = () => {
         >
           OSRS Clan Planner
         </Text>
-        <HStack
-          as="ul"
-          spacing={2}
-          align="center"
-        >
+        <HStack as="ul" spacing={2} align="center">
           {navLinks.map((link) => (
             <Box
               as="li"

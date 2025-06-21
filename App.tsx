@@ -10,11 +10,12 @@ import WOMEventDetails from "./MenuBar/WOMEventDetails";
 import CurrentEvent from "./MenuBar/CurrentEvent";
 import EventManagement from "./MenuBar/EventManagement";
 import Admin from "./MenuBar/Admin";
+import Draft from "./CurrentEvent/Draft";
 
 const App: React.FC = () => (
   <Router>
     <MenuBar />
-    <div className="container">
+    <div>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/my-profile" element={<MyProfile />} />
@@ -23,6 +24,7 @@ const App: React.FC = () => (
         <Route path="/wom-events" element={<WOMEvents />} />
         <Route path="/wom/event/:womId" element={<WOMEventDetails />} />
         <Route path="/current-event" element={<CurrentEvent />} />
+        <Route path="/draft" element={<Draft />} />
         <Route path="/event-management" element={<EventManagement />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>

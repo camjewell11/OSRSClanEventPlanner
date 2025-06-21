@@ -31,7 +31,8 @@ type CompetitionDetails = {
 
 const WOMEventDetails: React.FC = () => {
   const { womId } = useParams();
-  const [competitionDetails, setCompetitionDetails] = useState<CompetitionDetails | null>(null);
+  const [competitionDetails, setCompetitionDetails] =
+    useState<CompetitionDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [timeRemaining, setTimeRemaining] = useState({
     days: "00",
@@ -85,7 +86,9 @@ const WOMEventDetails: React.FC = () => {
         clearInterval(interval);
       } else {
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const hours = Math.floor(
+          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
@@ -124,16 +127,23 @@ const WOMEventDetails: React.FC = () => {
     <Box p={4}>
       <HStack pb={4} alignItems="flex-start">
         <Box>
-          <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            mb={4}
+          >
             <Text as="h2" fontSize="2xl">
               {competitionDetails.title}
             </Text>
           </Box>
           <Text mb={2}>
-            <strong>Start Date:</strong> {new Date(competitionDetails.startsAt).toLocaleString()}
+            <strong>Start Date:</strong>{" "}
+            {new Date(competitionDetails.startsAt).toLocaleString()}
           </Text>
           <Text mb={2}>
-            <strong>End Date:</strong> {new Date(competitionDetails.endsAt).toLocaleString()}
+            <strong>End Date:</strong>{" "}
+            {new Date(competitionDetails.endsAt).toLocaleString()}
           </Text>
         </Box>
         <Spacer />
@@ -151,7 +161,12 @@ const WOMEventDetails: React.FC = () => {
               ? "Time Until Start"
               : "Time Remaining"}
           </Text>
-          <Box display="flex" justifyContent="center" alignItems="center" gap={4}>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            gap={4}
+          >
             <Box textAlign="center">
               <Text fontSize="2xl" fontWeight="bold">
                 {timeRemaining.days}
